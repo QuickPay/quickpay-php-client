@@ -1,4 +1,5 @@
 <?php
+namespace Quickpay\Classes;
 /**
  * @class 		Quickpay_Exception
  * @extends     Exception
@@ -8,7 +9,7 @@
  * @author 		Patrick Tolvstein, Perfect Solution ApS
  * @docs        http://tech.quickpay.net/api/
  */
-class Quickpay_Exception extends Exception {
+class Exception extends \Exception {
   	/**
 	* __Construct function.
 	* 

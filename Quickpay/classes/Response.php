@@ -1,4 +1,5 @@
 <?php
+namespace Quickpay\Classes;
 /**
  * @class 		Quickpay_Response
  * @since		1.0.0
@@ -7,7 +8,7 @@
  * @author 		Patrick Tolvstein, Perfect Solution ApS
  * @docs        http://tech.quickpay.net/api/
  */
-class Quickpay_Response
+class Response
 {
     protected $status_code;
     protected $response_data;
@@ -49,7 +50,12 @@ class Quickpay_Response
      */ 
     public function asArray()
     {
-        return json_decode( $this->response_data, TRUE );
+        if( $response = json_decode( $this->response_data, TRUE ) ) 
+        {
+            return $response;
+        }
+
+        return array();
     }
 
     
@@ -62,7 +68,12 @@ class Quickpay_Response
      */ 
     public function asObject()
     {
-        return json_decode( $this->response_data );
+        if( $response = json_decode( $this->response_data ) )
+        {
+            return $response;
+        }
+
+        return new \stdClass;
     }
     
     
@@ -76,6 +87,24 @@ class Quickpay_Response
     public function http_status()
     {
         return $this->response_code;
+    }
+    
+    
+    /**
+     * is_success
+     * 
+     * Checks if the http status code indicates a succesful or an error response.
+     * 
+     * @return boolean
+     */   
+    public function is_success()
+    {
+        if( $this->response_code > 299 ) 
+        {
+            return false;
+        }
+        
+        return true;
     }
 }
 ?>

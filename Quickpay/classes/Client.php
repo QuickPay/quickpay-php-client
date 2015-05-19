@@ -1,4 +1,5 @@
 <?php
+namespace Quickpay\Classes;
 /**
  * @class 		Quickpay_Client
  * @since		1.0.0
@@ -7,7 +8,7 @@
  * @author 		Patrick Tolvstein, Perfect Solution ApS
  * @docs        http://tech.quickpay.net/api/
  */
-class Quickpay_Client 
+class Client 
 {
     /**
      * Contains cURL instance
@@ -29,12 +30,12 @@ class Quickpay_Client
 	*
 	* @access public
 	*/
-    public function __construct( $auth_string )
+    public function __construct( $auth_string = '' )
     {
         // Check if lib cURL is enabled
         if( ! function_exists('curl_init') ) 
         {
-            throw new Quickpay_Exception( 'Lib cURL must be enabled on the server' );
+            throw new Exception( 'Lib cURL must be enabled on the server' );
         }
         
         // Set auth string property
@@ -71,15 +72,21 @@ class Quickpay_Client
     {
         $this->ch = curl_init();
         
+        $headers = array(
+            'Accept-Version: v10',
+            'Accept: application/json', 
+        );
+
+        if( ! empty($this->auth_string)) 
+        {
+            $headers[] = 'Authorization: Basic ' . base64_encode( $this->auth_string );
+        }
+
         $options = array(
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: Basic ' . base64_encode( $this->auth_string ),
-                'Accept-Version: v10',
-                'Accept: application/json', 
-            )
+            CURLOPT_HTTPHEADER => $headers
         ); 
         
         curl_setopt_array( $this->ch, $options );

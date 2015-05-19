@@ -1,4 +1,4 @@
-quickpay-ruby-client
+quickpay-php-client
 ======================
 
 
@@ -19,11 +19,12 @@ To initialise an anonymous client:
 
 ```php5
 <?php
+    namespace Quickpay;
     require_once( 'quickpay.php' );
     try {
-        $client = Quickpay();
+        $client = new Quickpay();
     }
-    catch(Quickpay_Exception $e) {
+    catch(Exception $e) {
         //...
     }
 ?>
@@ -33,12 +34,13 @@ To initialise a client with QuickPay Api Key:
 
 ```php5
 <?php
+    namespace Quickpay;
     require_once( 'quickpay.php' );
     try {
         $api_key = 'xxx';
-        $client = Quickpay(":{$api_key}");
+        $client = new Quickpay(":{$api_key}");
     }
-    catch(Quickpay_Exception $e) {
+    catch(Exception $e) {
         //...
     }
 ?>
@@ -48,13 +50,14 @@ Or you can provide login credentials like:
 
 ```php5
 <?php
+    namespace Quickpay;
     require_once( 'quickpay.php' );
     try {
         $qp_username = 'xxx';
         $qp_password = 'xxx';
-        $client = Quickpay("{$qp_username}:{$qp_password}");
+        $client = new Quickpay("{$qp_username}:{$qp_password}");
     }
-    catch(Quickpay_Exception $e) {
+    catch(Exception $e) {
         //...
     }
 ?>

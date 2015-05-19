@@ -1,4 +1,5 @@
 <?php
+namespace Quickpay\Classes;
 /**
  * @class 		Quickpay_Request
  * @since		1.0.0
@@ -7,7 +8,7 @@
  * @author 		Patrick Tolvstein, Perfect Solution ApS
  * @docs        http://tech.quickpay.net/api/
  */
-class Quickpay_Request
+class Request
 {
     /**
      * Contains Quickpay_Client instance
@@ -130,7 +131,7 @@ class Quickpay_Request
 	*/   
     protected function set_url( $params ) 
     {
-        curl_setopt( $this->client->ch, CURLOPT_URL, Quickpay_Constants::API_URL . trim( $params, '/' ) );
+        curl_setopt( $this->client->ch, CURLOPT_URL, Constants::API_URL . trim( $params, '/' ) );
     }
     
     
@@ -162,7 +163,7 @@ class Quickpay_Request
  		$response_code = (int) curl_getinfo( $this->client->ch, CURLINFO_HTTP_CODE );
         
  		// Return the response object.
- 		return new Quickpay_Response( $response_code, $response_data );
+ 		return new Response( $response_code, $response_data );
  	}
 }
 ?>

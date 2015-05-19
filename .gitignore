@@ -1,2 +1,4 @@
 .DS_Store
-tests/
+vendor/
+composer.phar
+composer.lock

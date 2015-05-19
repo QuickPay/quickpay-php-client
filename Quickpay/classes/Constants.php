@@ -1,4 +1,5 @@
 <?php
+namespace Quickpay\Classes;
 /**
  * @class 		Quickpay_Constants
  * @since		1.0.0
@@ -7,7 +8,7 @@
  * @author 		Patrick Tolvstein, Perfect Solution ApS
  * @docs        http://tech.quickpay.net/api/
  */
-class Quickpay_Constants     
+class Constants     
 {
     /**
      * API DEFINITIONS
