@@ -1,5 +1,5 @@
 <?php
-namespace Quickpay\Classes;
+namespace Quickpay\API;
 /**
  * @class 		Quickpay_Response
  * @since		1.0.0
@@ -29,26 +29,26 @@ class Response
     
     
     /**
-     * asRaw
+     * as_raw
      * 
      * Returns the raw response body
      * 
      * @return string
      */    
-    public function asRaw()
+    public function as_raw()
     {
         return $this->response_data;
     }
     
 
     /**
-     * asArray
+     * as_array
      * 
      * Returns the response body as an array
      * 
      * @return array
      */ 
-    public function asArray()
+    public function as_array()
     {
         if( $response = json_decode( $this->response_data, TRUE ) ) 
         {
@@ -60,13 +60,13 @@ class Response
 
     
     /**
-     * asObject
+     * as_object
      * 
      * Returns the response body as an array
      * 
      * @return array
      */ 
-    public function asObject()
+    public function as_object()
     {
         if( $response = json_decode( $this->response_data ) )
         {
@@ -107,4 +107,3 @@ class Response
         return true;
     }
 }
-?>

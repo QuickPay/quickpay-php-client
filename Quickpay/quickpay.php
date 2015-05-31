@@ -7,8 +7,8 @@ require_once( 'classes/client.php' );
 require_once( 'classes/request.php' );
 require_once( 'classes/response.php' );
 
-use Quickpay\Classes\Client as Client;
-use Quickpay\Classes\Request as Request; 
+use Quickpay\API\Client as Client;
+use Quickpay\API\Request as Request; 
 
 class Quickpay 
 { 
@@ -33,4 +33,3 @@ class Quickpay
         $this->request = new Request( $client );
     }
 }
-?>

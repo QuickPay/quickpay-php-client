@@ -1,5 +1,5 @@
 <?php
-namespace Quickpay\Classes;
+namespace Quickpay\API;
 /**
  * @class 		Quickpay_Request
  * @since		1.0.0
@@ -166,4 +166,3 @@ class Request
  		return new Response( $response_code, $response_data );
  	}
 }
-?>

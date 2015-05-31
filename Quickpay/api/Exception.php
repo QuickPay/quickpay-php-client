@@ -1,5 +1,5 @@
 <?php
-namespace Quickpay\Classes;
+namespace Quickpay\API;
 /**
  * @class 		Quickpay_Exception
  * @extends     Exception
@@ -23,4 +23,3 @@ class Exception extends \Exception {
         parent::__construct($message, $code, $previous);
     }
 }
-?>

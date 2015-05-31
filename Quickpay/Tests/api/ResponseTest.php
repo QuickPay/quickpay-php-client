@@ -2,7 +2,7 @@
 
 namespace Quickpay\Tests;
 
-use Quickpay\Classes\Response;
+use Quickpay\API\Response;
 
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
@@ -63,7 +63,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, $this->responseTestData);
 
-        $responseArray = $response->asArray();
+        $responseArray = $response->as_array();
 
         $this->assertTrue( is_array($responseArray) );
     }
@@ -72,7 +72,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, '');
 
-        $responseArray = $response->asArray();
+        $responseArray = $response->as_array();
 
         $this->assertTrue( is_array($responseArray) );
     }
@@ -81,7 +81,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, $this->responseTestData);
 
-        $responseObject = $response->asObject();
+        $responseObject = $response->as_object();
 
         $this->assertTrue( is_object($responseObject) );
     }
@@ -90,7 +90,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, '');
 
-        $responseObject = $response->asObject();
+        $responseObject = $response->as_object();
 
         $this->assertTrue( is_object($responseObject) );
     }
@@ -99,7 +99,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, $this->responseTestData);
 
-        $responseRaw = $response->asRaw();
+        $responseRaw = $response->as_raw();
 
         $this->assertTrue( is_string($responseRaw) );
     }

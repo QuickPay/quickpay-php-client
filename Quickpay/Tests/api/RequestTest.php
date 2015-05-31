@@ -2,9 +2,9 @@
 
 namespace Quickpay\Tests;
 
-use Quickpay\Classes\Client;
-use Quickpay\Classes\Request;
-use Quickpay\Classes\Response;
+use Quickpay\API\Client;
+use Quickpay\API\Request;
+use Quickpay\API\Response;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {

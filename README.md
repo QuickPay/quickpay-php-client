@@ -96,21 +96,21 @@ if( $status == 200 ) {
 }
 ```
 
-The returned response object supports 3 different ways of returning the response body, `asRaw()`, `asObject`, `asArray()`.
+The returned response object supports 3 different ways of returning the response body, `as_raw()`, `as_object`, `as_array()`.
 
 ```php5
 // Get the raw response body
-$response_body = $client->get('/payments')->asRaw();
+$response_body = $client->get('/payments')->as_raw();
 
 // Get the response body as an object
-$response_body = $client->get('/payments')->asObject();
+$response_body = $client->get('/payments')->as_object();
 
 // Get the response body as an array
-$response_body = $client->get('/payments')->asArray();
+$response_body = $client->get('/payments')->as_array();
 
 
 // Example usage
-$payments = $client->get('/payments')->asArray();
+$payments = $client->get('/payments')->as_array();
 
 foreach( $payments as $payment ) {
     //...

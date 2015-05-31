@@ -1,5 +1,5 @@
 <?php
-namespace Quickpay\Classes;
+namespace Quickpay\API;
 /**
  * @class 		Quickpay_Client
  * @since		1.0.0
@@ -92,4 +92,3 @@ class Client
         curl_setopt_array( $this->ch, $options );
     }
 }
-?>
