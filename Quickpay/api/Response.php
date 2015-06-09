@@ -1,9 +1,9 @@
 <?php
-namespace Quickpay\API;
+namespace QuickPay\API;
 /**
- * @class 		Quickpay_Response
+ * @class 		QuickPay_Response
  * @since		1.0.0
- * @package		Quickpay
+ * @package		QuickPay
  * @category	Class
  * @author 		Patrick Tolvstein, Perfect Solution ApS
  * @docs        http://tech.quickpay.net/api/

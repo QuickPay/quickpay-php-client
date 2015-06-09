@@ -1,9 +1,13 @@
 <?php
-namespace Quickpay\API;
+namespace QuickPay\API;
+
+use Quickpay\API\Constants;
+use Quickpay\API\Response;
+
 /**
- * @class 		Quickpay_Request
+ * @class 		QuickPay_Request
  * @since		1.0.0
- * @package		Quickpay
+ * @package		QuickPay
  * @category	Class
  * @author 		Patrick Tolvstein, Perfect Solution ApS
  * @docs        http://tech.quickpay.net/api/
@@ -11,7 +15,7 @@ namespace Quickpay\API;
 class Request
 {
     /**
-     * Contains Quickpay_Client instance
+     * Contains QuickPay_Client instance
      * @access protected
      */   
     protected $client;

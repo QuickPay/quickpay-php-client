@@ -2,10 +2,10 @@ quickpay-php-client
 ======================
 
 
-`quickpay-php-client` is a official client for [QuickPay API](http://tech.quickpay.net/api). The Quickpay API enables you to accept payments in a secure and reliable manner. This package currently support QuickPay `v10` api.
+`quickpay-php-client` is a official client for [QuickPay API](http://tech.quickpay.net/api). The QuickPay API enables you to accept payments in a secure and reliable manner. This package currently support QuickPay `v10` api.
 
 ## Installation
-Upload `quickpay.php` and `/quickpay/` to your web space.
+Upload `/QuickPay/` to your web space.
 
 ## Usage
 
@@ -19,10 +19,10 @@ To initialise an anonymous client:
 
 ```php5
 <?php
-    namespace Quickpay;
-    require_once( 'quickpay.php' );
+    namespace QuickPay;
+    require_once( 'QuickPay.php' );
     try {
-        $client = new Quickpay();
+        $client = new QuickPay();
     }
     catch(Exception $e) {
         //...
@@ -34,11 +34,11 @@ To initialise a client with QuickPay Api Key:
 
 ```php5
 <?php
-    namespace Quickpay;
-    require_once( 'quickpay.php' );
+    namespace QuickPay;
+    require_once( 'QuickPay.php' );
     try {
         $api_key = 'xxx';
-        $client = new Quickpay(":{$api_key}");
+        $client = new QuickPay(":{$api_key}");
     }
     catch(Exception $e) {
         //...
@@ -50,12 +50,12 @@ Or you can provide login credentials like:
 
 ```php5
 <?php
-    namespace Quickpay;
-    require_once( 'quickpay.php' );
+    namespace QuickPay;
+    require_once( 'QuickPay.php' );
     try {
         $qp_username = 'xxx';
         $qp_password = 'xxx';
-        $client = new Quickpay("{$qp_username}:{$qp_password}");
+        $client = new QuickPay("{$qp_username}:{$qp_password}");
     }
     catch(Exception $e) {
         //...

@@ -1,6 +1,6 @@
 <?php
 
-namespace Quickpay\Tests;
+namespace QuickPay\Tests;
 
 use Quickpay\API\Exception;
 

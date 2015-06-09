@@ -1,19 +1,19 @@
 <?php
-namespace Quickpay;
+namespace QuickPay;
 
-require_once( 'classes/constants.php' );
-require_once( 'classes/exception.php' );
-require_once( 'classes/client.php' );
-require_once( 'classes/request.php' );
-require_once( 'classes/response.php' );
+require_once( 'api/constants.php' );
+require_once( 'api/exception.php' );
+require_once( 'api/client.php' );
+require_once( 'api/request.php' );
+require_once( 'api/response.php' );
 
-use Quickpay\API\Client as Client;
-use Quickpay\API\Request as Request; 
+use QuickPay\API\Client;
+use QuickPay\API\Request; 
 
-class Quickpay 
+class QuickPay 
 { 
     /**
-     * Contains the Quickpay_Request object
+     * Contains the QuickPay_Request object
      * @access public
      **/
     public $request;
