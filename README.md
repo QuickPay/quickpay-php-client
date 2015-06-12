@@ -88,7 +88,7 @@ $payments = $client->request->post('/payments', $form);
 Getting the `HTTP status code`:
 
 ```php5
-$response = $client->get('/payments');
+$response = $client->request->get('/payments');
 $status = $response->http_status();
 
 if( $status == 200 ) {
@@ -100,17 +100,17 @@ The returned response object supports 3 different ways of returning the response
 
 ```php5
 // Get the raw response body
-$response_body = $client->get('/payments')->as_raw();
+$response_body = $client->request->get('/payments')->as_raw();
 
 // Get the response body as an object
-$response_body = $client->get('/payments')->as_object();
+$response_body = $client->request->get('/payments')->as_object();
 
 // Get the response body as an array
-$response_body = $client->get('/payments')->as_array();
+$response_body = $client->request->get('/payments')->as_array();
 
 
 // Example usage
-$payments = $client->get('/payments')->as_array();
+$payments = $client->request->get('/payments')->as_array();
 
 foreach( $payments as $payment ) {
     //...
