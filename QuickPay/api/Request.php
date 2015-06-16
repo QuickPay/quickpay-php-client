@@ -17,24 +17,24 @@ class Request
     /**
      * Contains QuickPay_Client instance
      * @access protected
-     */   
+     */
     protected $client;
-   
-    
+
+
     /**
 	* __construct function.
-	* 
+	*
 	* Instantiates the object
 	*
 	* @access public
 	* @return object
-	*/     
+	*/
     public function __construct( $client )
     {
         $this->client = $client;
     }
-    
-    
+
+
     /**
 	* get function.
 	*
@@ -66,7 +66,7 @@ class Request
         // Start the request and return the response
         return $this->execute('GET');
     }
- 
+
 
    	/**
 	* post function.
@@ -75,16 +75,16 @@ class Request
 	*
 	* @access public
 	* @return object
-	*/    
-    public function post( $path, $form = array() ) 
+	*/
+    public function post( $path, $form = array() )
     {
         // Set the request params
         $this->set_url( $path );
 
         // Start the request and return the response
         return $this->execute('POST', $form);
-    }	
-    
+    }
+
 
    	/**
 	* put function.
@@ -93,17 +93,17 @@ class Request
 	*
 	* @access public
 	* @return object
-	*/    
-    public function put( $path, $form = array() ) 
+	*/
+    public function put( $path, $form = array() )
     {
         // Set the request params
         $this->set_url( $path );
 
         // Start the request and return the response
         return $this->execute('PUT', $form);
-    }	
-    
-    
+    }
+
+
    	/**
 	* patch function.
 	*
@@ -111,17 +111,17 @@ class Request
 	*
 	* @access public
 	* @return object
-	*/    
-    public function patch( $path, $form = array() ) 
+	*/
+    public function patch( $path, $form = array() )
     {
         // Set the request params
         $this->set_url( $path );
 
         // Start the request and return the response
         return $this->execute('PATCH', $form);
-    }	
-    
-    
+    }
+
+
    	/**
 	* delete function.
 	*
@@ -129,8 +129,8 @@ class Request
 	*
 	* @access public
 	* @return object
-	*/    
-    public function delete( $path, $form = array() ) 
+	*/
+    public function delete( $path, $form = array() )
     {
         // Set the request params
         $this->set_url( $path );
@@ -138,8 +138,8 @@ class Request
         // Start the request and return the response
         return $this->execute('DELETE', $form);
     }
-    
-    
+
+
   	/**
 	* set_url function.
 	*
@@ -147,13 +147,13 @@ class Request
 	*
 	* @access protected
 	* @return void
-	*/   
-    protected function set_url( $params ) 
+	*/
+    protected function set_url( $params )
     {
         curl_setopt( $this->client->ch, CURLOPT_URL, Constants::API_URL . trim( $params, '/' ) );
     }
-    
-    
+
+
    	/**
 	* execute function.
 	*
@@ -163,8 +163,8 @@ class Request
 	* @param  string $request_type
 	* @param  array  $form
 	* @return object
-	*/   	
- 	protected function execute( $request_type, $form = array() ) 
+	*/
+ 	protected function execute( $request_type, $form = array() )
  	{
  		// Set the HTTP request type
  		curl_setopt( $this->client->ch, CURLOPT_CUSTOMREQUEST, $request_type );
@@ -178,9 +178,14 @@ class Request
  		// Execute the request
  		$response_data = curl_exec( $this->client->ch );
 
+ 		if (curl_errno($this->client->ch) !== 0) {
+ 			//An error occurred
+ 			throw new Exception(curl_error($this->client->ch), curl_errno($this->client->ch));
+ 		}
+
  		// Retrieve the HTTP response code
  		$response_code = (int) curl_getinfo( $this->client->ch, CURLINFO_HTTP_CODE );
-        
+
  		// Return the response object.
  		return new Response( $response_code, $response_data );
  	}
