@@ -1,8 +1,8 @@
 <?php
 namespace QuickPay\API;
 
-use Quickpay\API\Constants;
-use Quickpay\API\Response;
+use QuickPay\API\Constants;
+use QuickPay\API\Response;
 
 /**
  * @class 		QuickPay_Request
