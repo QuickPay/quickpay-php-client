@@ -1,12 +1,6 @@
 <?php
 namespace QuickPay;
 
-require_once( 'api/constants.php' );
-require_once( 'api/exception.php' );
-require_once( 'api/client.php' );
-require_once( 'api/request.php' );
-require_once( 'api/response.php' );
-
 use QuickPay\API\Client;
 use QuickPay\API\Request; 
 

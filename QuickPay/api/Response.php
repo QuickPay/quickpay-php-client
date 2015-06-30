@@ -64,7 +64,7 @@ class Response
      * 
      * Returns the response body as an array
      * 
-     * @return array
+     * @return object
      */ 
     public function as_object()
     {
