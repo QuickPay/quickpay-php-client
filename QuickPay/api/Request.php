@@ -157,7 +157,7 @@ class Request
  		// If additional data is delivered, we will send it along with the API request
  		if( is_array( $form ) && ! empty( $form ) )
  		{
- 			curl_setopt( $this->client->ch, CURLOPT_POSTFIELDS, $form );
+ 			curl_setopt( $this->client->ch, CURLOPT_POSTFIELDS, http_build_query($form) );
  		}
 
  		// Execute the request
