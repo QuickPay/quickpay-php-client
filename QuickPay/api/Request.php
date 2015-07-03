@@ -41,10 +41,25 @@ class Request
 	* Performs an API GET request
 	*
 	* @access public
+	* @param  string $path
+	* @param  array  $query
 	* @return object
 	*/    
-    public function get( $path ) 
+    public function get( $path, $query = array() )
     {
+		// Add query parameters to $path?
+		if ( $query )
+		{
+			if (strpos($path, '?') === false )
+			{
+				$path .= '?' . http_build_query($query);
+			}
+			else
+			{
+				$path .= ini_get('arg_separator.output') . http_build_query($query);
+			}
+		}
+
         // Set the request params
         $this->set_url( $path );
 
