@@ -1,33 +1,33 @@
 <?php
 namespace QuickPay;
 
-require_once( 'api/constants.php' );
-require_once( 'api/exception.php' );
-require_once( 'api/client.php' );
-require_once( 'api/request.php' );
-require_once( 'api/response.php' );
+require_once( 'api/Constants.php' );
+require_once( 'api/Exception.php' );
+require_once( 'api/Client.php' );
+require_once( 'api/Request.php' );
+require_once( 'api/Response.php' );
 
 use QuickPay\API\Client;
-use QuickPay\API\Request; 
+use QuickPay\API\Request;
 
-class QuickPay 
-{ 
+class QuickPay
+{
     /**
      * Contains the QuickPay_Request object
      * @access public
      **/
     public $request;
-  	
-    
+
+
     /**
 	* __construct function.
-	* 
-	* Instantiates the main class. 
-	* Creates a client which is passed to the request construct. 
+	*
+	* Instantiates the main class.
+	* Creates a client which is passed to the request construct.
 	*
 	* @access public
-	*/     
-    public function __construct( $auth_string = '' ) 
+	*/
+    public function __construct( $auth_string = '' )
     {
         $client = new Client( $auth_string );
         $this->request = new Request( $client );
