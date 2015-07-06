@@ -99,8 +99,8 @@ if( $status == 200 ) {
 The returned response object supports 3 different ways of returning the response body, `as_raw()`, `as_object`, `as_array()`.
 
 ```php5
-// Get the raw response body
-$response_body = $client->request->get('/payments')->as_raw();
+// Get the HTTP status code, headers and raw response body.
+list($status_code, $headers, $response_body) = $client->request->get('/payments')->as_raw();
 
 // Get the response body as an object
 $response_body = $client->request->get('/payments')->as_object();
@@ -119,15 +119,3 @@ foreach( $payments as $payment ) {
 ```
 
 You can read more about api responses at [http://tech.quickpay.net/api/](http://tech.quickpay.net/api).
-
-### Debugging
-To see the headers sent and received use the three functions `store_headers()`, `get_sent_headers()`, and `get_received_headers()`.
-
-```php5
-$client->request->store_headers();
-$response = $client->request->get('/payments');
-$sent_headers = $client->request->get_sent_headers(); // Masks the value of the Authorization: header.
-$sent_headers = $client->request->get_sent_headers(true); // Keeps the value of the Authorization: header.
-$received_headers = $client->request->get_received_headers();
-$client->request->store_headers(false); // Disable storing the headers
-```
