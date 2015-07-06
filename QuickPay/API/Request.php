@@ -1,8 +1,8 @@
 <?php
 namespace QuickPay\API;
 
-use Quickpay\API\Constants;
-use Quickpay\API\Response;
+use QuickPay\API\Constants;
+use QuickPay\API\Response;
 
 /**
  * @class 		QuickPay_Request
@@ -19,7 +19,6 @@ class Request
      * @access protected
      */
     protected $client;
-
 
     /**
 	* __construct function.
@@ -43,7 +42,7 @@ class Request
 	* @access public
 	* @param  string $path
 	* @param  array  $query
-	* @return object
+	* @return Response
 	*/    
     public function get( $path, $query = array() )
     {
@@ -74,7 +73,7 @@ class Request
 	* Performs an API POST request
 	*
 	* @access public
-	* @return object
+	* @return Response
 	*/
     public function post( $path, $form = array() )
     {
@@ -92,7 +91,7 @@ class Request
 	* Performs an API PUT request
 	*
 	* @access public
-	* @return object
+	* @return Response
 	*/
     public function put( $path, $form = array() )
     {
@@ -110,7 +109,7 @@ class Request
 	* Performs an API PATCH request
 	*
 	* @access public
-	* @return object
+	* @return Response
 	*/
     public function patch( $path, $form = array() )
     {
@@ -128,7 +127,7 @@ class Request
 	* Performs an API DELETE request
 	*
 	* @access public
-	* @return object
+	* @return Response
 	*/
     public function delete( $path, $form = array() )
     {
@@ -162,7 +161,7 @@ class Request
 	* @access protected
 	* @param  string $request_type
 	* @param  array  $form
-	* @return object
+	* @return Response
 	*/
  	protected function execute( $request_type, $form = array() )
  	{
@@ -175,18 +174,31 @@ class Request
  			curl_setopt( $this->client->ch, CURLOPT_POSTFIELDS, http_build_query($form) );
  		}
 
+		// Store received headers in temporary memory file, remember sent headers
+		$fh_header = fopen('php://memory', 'w+');
+		curl_setopt($this->client->ch, CURLOPT_WRITEHEADER, $fh_header);
+		curl_setopt($this->client->ch, CURLINFO_HEADER_OUT, true);
+
  		// Execute the request
  		$response_data = curl_exec( $this->client->ch );
 
- 		if (curl_errno($this->client->ch) !== 0) {
+		if (curl_errno($this->client->ch) !== 0) {
  			//An error occurred
+			fclose($fh_header);
  			throw new Exception(curl_error($this->client->ch), curl_errno($this->client->ch));
  		}
+
+		// Grab the headers
+		$sent_headers = curl_getinfo($this->client->ch, CURLINFO_HEADER_OUT);
+		rewind($fh_header);
+		$received_headers = stream_get_contents($fh_header);
+		fclose($fh_header);
 
  		// Retrieve the HTTP response code
  		$response_code = (int) curl_getinfo( $this->client->ch, CURLINFO_HTTP_CODE );
 
  		// Return the response object.
- 		return new Response( $response_code, $response_data );
+ 		return new Response( $response_code, $sent_headers, $received_headers, $response_data );
  	}
+
 }

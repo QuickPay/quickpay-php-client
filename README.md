@@ -99,8 +99,8 @@ if( $status == 200 ) {
 The returned response object supports 3 different ways of returning the response body, `as_raw()`, `as_object`, `as_array()`.
 
 ```php5
-// Get the raw response body
-$response_body = $client->request->get('/payments')->as_raw();
+// Get the HTTP status code, headers and raw response body.
+list($status_code, $headers, $response_body) = $client->request->get('/payments')->as_raw();
 
 // Get the response body as an object
 $response_body = $client->request->get('/payments')->as_object();
@@ -119,3 +119,11 @@ foreach( $payments as $payment ) {
 ```
 
 You can read more about api responses at [http://tech.quickpay.net/api/](http://tech.quickpay.net/api).
+
+## Tests
+
+Use composer to create an autoloader:
+```command
+$ composer update
+$ phpunit --bootstrap vendor/autoload.php
+```

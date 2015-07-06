@@ -6,8 +6,8 @@
     	"phpunit/phpunit": "4.8.*@dev"
     },
     "autoload": {
-        "psr-0": {
-            "QuickPay": ""
+        "psr-4": {
+            "QuickPay\\": "QuickPay/"
         }
     }
 }
