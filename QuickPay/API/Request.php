@@ -1,8 +1,8 @@
 <?php
 namespace QuickPay\API;
 
-use Quickpay\API\Constants;
-use Quickpay\API\Response;
+use QuickPay\API\Constants;
+use QuickPay\API\Response;
 
 /**
  * @class 		QuickPay_Request
@@ -42,7 +42,7 @@ class Request
 	* @access public
 	* @param  string $path
 	* @param  array  $query
-	* @return object
+	* @return Response
 	*/    
     public function get( $path, $query = array() )
     {
@@ -73,7 +73,7 @@ class Request
 	* Performs an API POST request
 	*
 	* @access public
-	* @return object
+	* @return Response
 	*/
     public function post( $path, $form = array() )
     {
@@ -91,7 +91,7 @@ class Request
 	* Performs an API PUT request
 	*
 	* @access public
-	* @return object
+	* @return Response
 	*/
     public function put( $path, $form = array() )
     {
@@ -109,7 +109,7 @@ class Request
 	* Performs an API PATCH request
 	*
 	* @access public
-	* @return object
+	* @return Response
 	*/
     public function patch( $path, $form = array() )
     {
@@ -127,7 +127,7 @@ class Request
 	* Performs an API DELETE request
 	*
 	* @access public
-	* @return object
+	* @return Response
 	*/
     public function delete( $path, $form = array() )
     {
@@ -161,7 +161,7 @@ class Request
 	* @access protected
 	* @param  string $request_type
 	* @param  array  $form
-	* @return object
+	* @return Response
 	*/
  	protected function execute( $request_type, $form = array() )
  	{

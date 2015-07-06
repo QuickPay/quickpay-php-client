@@ -2,7 +2,7 @@
 
 namespace QuickPay\Tests;
 
-use Quickpay\API\Exception;
+use QuickPay\API\Exception;
 
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {

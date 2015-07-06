@@ -2,7 +2,7 @@
 
 namespace QuickPay\Tests;
 
-use Quickpay\API\Response;
+use QuickPay\API\Response;
 
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,7 +17,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      */
 	public function testSuccessResponseHTTPCodes($httpCode, $expectedResult)
     {
-        $response = new Response($httpCode, '');
+        $response = new Response($httpCode, '', '', '');
         
         $result = $response->is_success();
         
@@ -43,7 +43,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnOfHTTPStatusCodes($httpCode, $expectedCode)
     {
-        $response = new Response($httpCode, '');
+        $response = new Response($httpCode, '', '', '');
         
         $statusCode = $response->http_status();
         
@@ -61,7 +61,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnOfResponseDataAsArray()
     {
-        $response = new Response(200, $this->responseTestData);
+        $response = new Response(200, '', '', $this->responseTestData);
 
         $responseArray = $response->as_array();
 
@@ -70,7 +70,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnOfEmptyResponseDataAsArray()
     {
-        $response = new Response(200, '');
+        $response = new Response(200, '', '', '');
 
         $responseArray = $response->as_array();
 
@@ -79,7 +79,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnOfResponseDataAsObject()
     {
-        $response = new Response(200, $this->responseTestData);
+        $response = new Response(200, '', '', $this->responseTestData);
 
         $responseObject = $response->as_object();
 
@@ -88,7 +88,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnOfEmptyResponseDataAsObject()
     {
-        $response = new Response(200, '');
+        $response = new Response(200, '', '', '');
 
         $responseObject = $response->as_object();
 
@@ -97,10 +97,12 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnOfResponseDataAsRaw()
     {
-        $response = new Response(200, $this->responseTestData);
+        $response = new Response(200, '', '', $this->responseTestData);
 
-        $responseRaw = $response->as_raw();
+		list($statusCode, $headers, $responseRaw) = $response->as_raw();
 
+        $this->assertTrue( is_int($statusCode) );
+        $this->assertTrue( is_array($headers) );
         $this->assertTrue( is_string($responseRaw) );
     }
 

@@ -119,3 +119,11 @@ foreach( $payments as $payment ) {
 ```
 
 You can read more about api responses at [http://tech.quickpay.net/api/](http://tech.quickpay.net/api).
+
+## Tests
+
+Use composer to create an autoloader:
+```command
+$ composer update
+$ phpunit --bootstrap vendor/autoload.php
+```
