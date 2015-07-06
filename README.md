@@ -119,3 +119,15 @@ foreach( $payments as $payment ) {
 ```
 
 You can read more about api responses at [http://tech.quickpay.net/api/](http://tech.quickpay.net/api).
+
+### Debugging
+To see the headers sent and received use the three functions `store_headers()`, `get_sent_headers()`, and `get_received_headers()`.
+
+```php5
+$client->request->store_headers();
+$response = $client->request->get('/payments');
+$sent_headers = $client->request->get_sent_headers(); // Masks the value of the Authorization: header.
+$sent_headers = $client->request->get_sent_headers(true); // Keeps the value of the Authorization: header.
+$received_headers = $client->request->get_received_headers();
+$client->request->store_headers(false); // Disable storing the headers
+```
