@@ -171,7 +171,17 @@ class Request
  		// If additional data is delivered, we will send it along with the API request
  		if( is_array( $form ) && ! empty( $form ) )
  		{
- 			curl_setopt( $this->client->ch, CURLOPT_POSTFIELDS, http_build_query($form) );
+ 			$json_data = json_encode( $form );
+ 			curl_setopt( $this->client->ch, CURLOPT_POSTFIELDS, $json_data );
+ 			$this->client->set_headers(
+ 				array(
+ 					'Content-Length: ' . strlen($json_data)
+ 				)
+ 			);
+ 		}
+ 		else
+ 		{
+ 			$this->client->set_headers();
  		}
 
 		// Store received headers in temporary memory file, remember sent headers
