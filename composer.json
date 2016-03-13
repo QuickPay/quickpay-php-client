@@ -3,7 +3,8 @@
         "lib/curl": "dev-master"
     },
     "require-dev" : {
-    	"phpunit/phpunit": "4.8.*@dev"
+    	"phpunit/phpunit": "4.8.*@dev",
+      "squizlabs/php_codesniffer": "2.*"
     },
     "autoload": {
         "psr-4": {
