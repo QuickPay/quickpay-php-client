@@ -23,7 +23,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     {
         $pingResponse = $this->request->get('/ping');
 
-        $this->assertTrue( ($pingResponse instanceof Response) );
+        $this->assertTrue(($pingResponse instanceof Response));
     }
 
     public function testBadAuthentication()
