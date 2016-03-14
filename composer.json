@@ -2,7 +2,7 @@
     "name": "1200wd/quickpay-php-client",
     "description": "A composer installable fork of the official quickpay php library.",
     "require": {
-        "lib/curl": "dev-master"
+        "lib-curl": "*"
     },
     "require-dev" : {
     	"phpunit/phpunit": "4.8.*@dev"
