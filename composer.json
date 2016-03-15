@@ -1,13 +1,18 @@
 {
+    "name": "QuickPay/quickpay-php-client",
+    "type": "library",
+    "description": "PHP-SDK to communicate with the payment provider QuickPay",
+    "homepage": "https://github.com/QuickPay/quickpay-php-client",
     "require": {
         "lib/curl": "dev-master"
     },
     "require-dev" : {
-    	"phpunit/phpunit": "4.8.*@dev"
+    	"phpunit/phpunit": "4.8.*@dev",
+      "squizlabs/php_codesniffer": "2.*"
     },
     "autoload": {
-        "psr-0": {
-            "QuickPay": ""
+        "psr-4": {
+            "QuickPay\\": "QuickPay/"
         }
     }
 }
