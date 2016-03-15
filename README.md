@@ -1,6 +1,7 @@
 quickpay-php-client
 ======================
 
+[![Build Status](https://travis-ci.org/QuickPay/quickpay-php-client.svg)](https://travis-ci.org/QuickPay/quickpay-php-client)
 
 `quickpay-php-client` is a official client for [QuickPay API](http://tech.quickpay.net/api). The QuickPay API enables you to accept payments in a secure and reliable manner. This package currently support QuickPay `v10` api.
 
