@@ -1,5 +1,6 @@
 <?php
 namespace QuickPay\API;
+
 /**
  * @class       QuickPay_Constants
  * @since       1.0.0

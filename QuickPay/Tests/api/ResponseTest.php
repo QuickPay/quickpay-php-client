@@ -6,10 +6,11 @@ use QuickPay\API\Response;
 
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
-
     private $responseTestData = '{ "key1": "value1", "key2": "value2" }';
 
     /**
+     * Test the success response HTTP codes.
+     *
      * @param string $httpCode       The HTTP code we want to test
      * @param string $expectedResult What we expect the result to be
      *
@@ -27,15 +28,17 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     public function providerTestSuccessResponseHTTPCodes()
     {
         return array(
-        array(200, true),
-        array(255, true),
+            array(200, true),
+            array(255, true),
             array(299, true),
             array(300, false),
-        array(400, false)
+            array(400, false)
         );
     }
 
     /**
+     * Test the return of HTTP status codes.
+     *
      * @param string $httpCode     The HTTP code we want to test
      * @param string $expectedCode What we expect the result to be
      *
@@ -105,5 +108,4 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($headers));
         $this->assertTrue(is_string($responseRaw));
     }
-
 }
