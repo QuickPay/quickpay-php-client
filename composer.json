@@ -3,6 +3,7 @@
     "type": "library",
     "description": "PHP-SDK to communicate with the payment provider QuickPay",
     "homepage": "https://github.com/QuickPay/quickpay-php-client",
+    "license": "MIT",
     "require": {
         "lib/curl": "dev-master"
     },
