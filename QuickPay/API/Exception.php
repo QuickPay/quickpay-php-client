@@ -1,5 +1,6 @@
 <?php
 namespace QuickPay\API;
+
 /**
  * @class       QuickPay_Exception
  * @extends     Exception

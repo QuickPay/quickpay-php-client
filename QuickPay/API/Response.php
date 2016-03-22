@@ -1,5 +1,6 @@
 <?php
 namespace QuickPay\API;
+
 /**
  * @class         QuickPay_Response
  * @since        1.0.0
@@ -48,14 +49,13 @@ class Response
      * @param string $received_headers the headers received
      * @param string $response_data    the http response body
      */
-    public function __construct( $status_code, $sent_headers, $received_headers, $response_data )
+    public function __construct($status_code, $sent_headers, $received_headers, $response_data)
     {
         $this->status_code = $status_code;
         $this->sent_headers = $sent_headers;
         $this->received_headers = $received_headers;
         $this->response_data = $response_data;
     }
-
 
     /**
      * as_raw
@@ -66,10 +66,10 @@ class Response
      * @param  boolan $keep_authorization_value Normally the value of the Authorization: header is masked. True keeps the sent value.
      * @return array            [integer, string[], string]
      */
-    public function as_raw( $keep_authorization_value = false )
+    public function as_raw($keep_authorization_value = false)
     {
         // To avoid unintentional logging of credentials the default is to mask the value of the Authorization: header
-        if ($keep_authorization_value ) {
+        if ($keep_authorization_value) {
             $sent_headers = $this->sent_headers;
         } else {
             // Avoid dependency on mbstring
@@ -100,7 +100,7 @@ class Response
      */
     public function as_array()
     {
-        if ($response = json_decode($this->response_data, true) ) {
+        if ($response = json_decode($this->response_data, true)) {
             return $response;
         }
 
@@ -116,7 +116,7 @@ class Response
      */
     public function as_object()
     {
-        if ($response = json_decode($this->response_data) ) {
+        if ($response = json_decode($this->response_data)) {
             return $response;
         }
 
@@ -144,7 +144,7 @@ class Response
      */
     public function is_success()
     {
-        if ($this->status_code > 299 ) {
+        if ($this->status_code > 299) {
             return false;
         }
 
