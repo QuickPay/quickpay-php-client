@@ -5,7 +5,8 @@
     "homepage": "https://github.com/QuickPay/quickpay-php-client",
     "license": "MIT",
     "require": {
-        "lib/curl": "dev-master"
+        "php": ">=5.3.3",
+        "lib-curl": "*"
     },
     "require-dev" : {
     	"phpunit/phpunit": "4.8.*@dev",
