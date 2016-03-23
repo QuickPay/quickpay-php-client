@@ -84,9 +84,10 @@ class Response
 
         return array(
             $this->status_code,
-            array('sent' => $sent_headers,
-             'received' => $this->received_headers,
-			 ),
+            array(
+                'sent' => $sent_headers,
+                'received' => $this->received_headers,
+            ),
             $this->response_data,
         );
     }
