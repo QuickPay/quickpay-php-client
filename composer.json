@@ -5,6 +5,7 @@
     "homepage": "https://github.com/QuickPay/quickpay-php-client",
     "license": "MIT",
     "require": {
+        "php": ">=5.3.3",
         "lib/curl": "dev-master"
     },
     "require-dev" : {

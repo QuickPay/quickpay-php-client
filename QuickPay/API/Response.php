@@ -82,13 +82,14 @@ class Response
             $sent_headers = implode("\n", $lines);
         }
 
-        return [
+        return array(
             $this->status_code,
-            ['sent' => $sent_headers,
-             'received' => $this->received_headers,
-            ],
+            array(
+                'sent' => $sent_headers,
+                'received' => $this->received_headers,
+            ),
             $this->response_data,
-        ];
+        );
     }
 
     /**
