@@ -29,7 +29,7 @@ class Request
      * @access public
      * @return object
      */
-    public function __construct( $client )
+    public function __construct($client)
     {
         $this->client = $client;
     }
@@ -44,11 +44,11 @@ class Request
      * @param  array  $query
      * @return Response
      */
-    public function get( $path, $query = array() )
+    public function get($path, $query = array())
     {
         // Add query parameters to $path?
         if ($query) {
-            if (strpos($path, '?') === false ) {
+            if (strpos($path, '?') === false) {
                 $path .= '?' . http_build_query($query);
             } else {
                 $path .= ini_get('arg_separator.output') . http_build_query($query);
@@ -70,7 +70,7 @@ class Request
      * @access public
      * @return Response
      */
-    public function post( $path, $form = array() )
+    public function post($path, $form = array())
     {
         // Set the request params
         $this->set_url($path);
@@ -87,7 +87,7 @@ class Request
      * @access public
      * @return Response
      */
-    public function put( $path, $form = array() )
+    public function put($path, $form = array())
     {
         // Set the request params
         $this->set_url($path);
@@ -104,7 +104,7 @@ class Request
      * @access public
      * @return Response
      */
-    public function patch( $path, $form = array() )
+    public function patch($path, $form = array())
     {
         // Set the request params
         $this->set_url($path);
@@ -121,7 +121,7 @@ class Request
      * @access public
      * @return Response
      */
-    public function delete( $path, $form = array() )
+    public function delete($path, $form = array())
     {
         // Set the request params
         $this->set_url($path);
@@ -138,7 +138,7 @@ class Request
      * @access protected
      * @return void
      */
-    protected function set_url( $params )
+    protected function set_url($params)
     {
         curl_setopt($this->client->ch, CURLOPT_URL, Constants::API_URL . trim($params, '/'));
     }
@@ -153,7 +153,7 @@ class Request
      * @param  array  $form
      * @return Response
      */
-    protected function execute( $request_type, $form = array() )
+    protected function execute($request_type, $form = array())
     {
         // Set the HTTP request type
         curl_setopt($this->client->ch, CURLOPT_CUSTOMREQUEST, $request_type);
@@ -189,5 +189,4 @@ class Request
         // Return the response object.
         return new Response($response_code, $sent_headers, $received_headers, $response_data);
     }
-
 }

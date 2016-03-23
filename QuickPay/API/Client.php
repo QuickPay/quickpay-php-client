@@ -1,5 +1,6 @@
 <?php
 namespace QuickPay\API;
+
 /**
  * @class       QuickPay_Client
  * @since       1.0.0
@@ -31,10 +32,10 @@ class Client
      *
      * @access public
      */
-    public function __construct( $auth_string = '' )
+    public function __construct($auth_string = '')
     {
         // Check if lib cURL is enabled
-        if (!function_exists('curl_init') ) {
+        if (!function_exists('curl_init')) {
             throw new Exception('Lib cURL must be enabled on the server');
         }
 
@@ -54,7 +55,7 @@ class Client
      */
     public function shutdown()
     {
-        if (!empty($this->ch) ) {
+        if (!empty($this->ch)) {
             curl_close($this->ch);
         }
     }
@@ -72,7 +73,7 @@ class Client
 
         $headers = array(
             'Accept-Version: v10',
-            'Accept: application/json', 
+            'Accept: application/json',
         );
 
         if (!empty($this->auth_string)) {

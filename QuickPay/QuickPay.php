@@ -26,9 +26,11 @@ class QuickPay
     * Instantiates the main class.
     * Creates a client which is passed to the request construct.
     *
+    * @auth_string string Authentication string for QuickPay
+    *
     * @access public
     */
-    public function __construct( $auth_string = '' )
+    public function __construct($auth_string = '')
     {
         $client = new Client($auth_string);
         $this->request = new Request($client);
