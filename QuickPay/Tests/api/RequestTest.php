@@ -8,9 +8,7 @@ use QuickPay\API\Response;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
-
     private $responseTestData = '{ "key1": "value1", "key2": "value2" }';
-
     protected $request;
 
     public function setUp()
@@ -63,5 +61,4 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($pingResponse->is_success());
     }
-
 }
