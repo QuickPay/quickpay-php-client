@@ -113,7 +113,7 @@ class Response
      *
      * Returns the response body as an array
      *
-     * @return array
+     * @return \stdClass
      */
     public function as_object()
     {
