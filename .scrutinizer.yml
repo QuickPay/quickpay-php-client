@@ -9,3 +9,7 @@ build:
         coverage:
           file: 'clover.xml'
           format: 'php-clover'
+checks:
+  php:
+    custom_coding_standard:
+      ruleset_path: 'ruleset.xml'
