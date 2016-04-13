@@ -27,7 +27,6 @@ class Request
      * Instantiates the object
      *
      * @access public
-     * @return object
      */
     public function __construct($client)
     {
@@ -47,7 +46,7 @@ class Request
     public function get($path, $query = array())
     {
         // Add query parameters to $path?
-        if ($query) {
+        if (!empty($query)) {
             if (strpos($path, '?') === false) {
                 $path .= '?' . http_build_query($query);
             } else {

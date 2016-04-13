@@ -8,13 +8,20 @@
         "php": ">=5.3.3",
         "lib/curl": "dev-master"
     },
-    "require-dev" : {
-    	"phpunit/phpunit": "4.8.*@dev",
-      "squizlabs/php_codesniffer": "2.*"
-    },
     "autoload": {
         "psr-4": {
             "QuickPay\\": "QuickPay/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+          "QuickPay\\Tests\\": "Tests/api/"
+        }
+    },
+    "require-dev" : {
+      "php": ">=5.5.0",
+      "phpunit/phpunit": "4.8.*@dev",
+      "squizlabs/php_codesniffer": "2.*",
+      "satooshi/php-coveralls": "dev-master"
     }
 }
