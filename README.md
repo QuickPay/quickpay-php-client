@@ -1,12 +1,27 @@
 quickpay-php-client
 ======================
 
-[![Build Status](https://travis-ci.org/QuickPay/quickpay-php-client.svg)](https://travis-ci.org/QuickPay/quickpay-php-client)
+[![Build Status](https://travis-ci.org/QuickPay/quickpay-php-client.svg)](https://travis-ci.org/QuickPay/quickpay-php-client) [![Code Coverage](https://scrutinizer-ci.com/g/QuickPay/quickpay-php-client/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/QuickPay/quickpay-php-client/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/QuickPay/quickpay-php-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/QuickPay/quickpay-php-client/?branch=master) [![Latest Stable Version](https://poser.pugx.org/quickpay/quickpay-php-client/v/stable)](https://packagist.org/packages/quickpay/quickpay-php-client) [![Total Downloads](https://poser.pugx.org/quickpay/quickpay-php-client/downloads)](https://packagist.org/packages/quickpay/quickpay-php-client) [![License](https://poser.pugx.org/quickpay/quickpay-php-client/license)](https://packagist.org/packages/quickpay/quickpay-php-client)
 
 `quickpay-php-client` is a official client for [QuickPay API](http://tech.quickpay.net/api). The QuickPay API enables you to accept payments in a secure and reliable manner. This package currently support QuickPay `v10` api.
 
 ## Installation
-Upload `/QuickPay/` to your web space.
+
+### Composer
+
+Simply add a dependency on quickpay/quickpay-php-client to your project's composer.json file if you use Composer to manage the dependencies of your project. Here is a minimal example of a composer.json file that just defines a dependency on newest stable version of QuickPay:
+
+```
+{
+    "require": {
+        "quickpay/quickpay-php-client": "0.1.*"
+    }
+}
+```
+
+### Manually upload
+
+If you cannot use composer and all the goodness the autoloader in composer gives you, you can upload `/QuickPay/` to your web space. However, then you need to manage the autoloading of the classes yourself.
 
 ## Usage
 
@@ -14,20 +29,19 @@ Before doing anything you should register yourself with QuickPay and get access 
 
 ### Create a new client
 
-First you should create a client instance that is anonymous or authorized with `api_key` or login credentials provided by QuickPay. 
+First you should create a client instance that is anonymous or authorized with `api_key` or login credentials provided by QuickPay.
 
 To initialise an anonymous client:
 
 ```php5
 <?php
-    namespace QuickPay;
-    require_once( 'QuickPay.php' );
-    try {
-        $client = new QuickPay();
-    }
-    catch(Exception $e) {
-        //...
-    }
+use QuickPay\QuickPay;
+
+try {
+    $client = new QuickPay();
+} catch (Exception $e) {
+    //...
+}
 ?>
 ```
 
@@ -35,15 +49,14 @@ To initialise a client with QuickPay Api Key:
 
 ```php5
 <?php
-    namespace QuickPay;
-    require_once( 'QuickPay.php' );
-    try {
-        $api_key = 'xxx';
-        $client = new QuickPay(":{$api_key}");
-    }
-    catch(Exception $e) {
-        //...
-    }
+use QuickPay\QuickPay;
+
+try {
+    $api_key = 'xxx';
+    $client = new QuickPay(":{$api_key}");
+} catch (Exception $e) {
+    //...
+}
 ?>
 ```
 
@@ -51,16 +64,15 @@ Or you can provide login credentials like:
 
 ```php5
 <?php
-    namespace QuickPay;
-    require_once( 'QuickPay.php' );
-    try {
-        $qp_username = 'xxx';
-        $qp_password = 'xxx';
-        $client = new QuickPay("{$qp_username}:{$qp_password}");
-    }
-    catch(Exception $e) {
-        //...
-    }
+use QuickPay\QuickPay;
+
+try {
+    $qp_username = 'xxx';
+    $qp_password = 'xxx';
+    $client = new QuickPay("{$qp_username}:{$qp_password}");
+} catch (Exception $e) {
+    //...
+}
 ?>
 ```
 
@@ -92,7 +104,7 @@ Getting the `HTTP status code`:
 $response = $client->request->get('/payments');
 $status = $response->http_status();
 
-if( $status == 200 ) {
+if ($status == 200) {
     // Successful request
 }
 ```
@@ -109,11 +121,10 @@ $response_body = $client->request->get('/payments')->as_object();
 // Get the response body as an array
 $response_body = $client->request->get('/payments')->as_array();
 
-
 // Example usage
 $payments = $client->request->get('/payments')->as_array();
 
-foreach( $payments as $payment ) {
+foreach($payments as $payment) {
     //...
 }
 
@@ -124,7 +135,8 @@ You can read more about api responses at [http://tech.quickpay.net/api/](http://
 ## Tests
 
 Use composer to create an autoloader:
+
 ```command
-$ composer update
-$ phpunit --bootstrap vendor/autoload.php
+$ composer install
+$ phpunit
 ```
