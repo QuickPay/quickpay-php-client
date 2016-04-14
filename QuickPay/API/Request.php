@@ -48,9 +48,9 @@ class Request
         // Add query parameters to $path?
         if (!empty($query)) {
             if (strpos($path, '?') === false) {
-                $path .= '?' . http_build_query($query);
+                $path .= '?' . http_build_query($query, '', '&');
             } else {
-                $path .= ini_get('arg_separator.output') . http_build_query($query);
+                $path .= ini_get('arg_separator.output') . http_build_query($query, '', '&');
             }
         }
 
@@ -159,7 +159,7 @@ class Request
 
         // If additional data is delivered, we will send it along with the API request
         if (is_array($form) && ! empty($form)) {
-            curl_setopt($this->client->ch, CURLOPT_POSTFIELDS, http_build_query($form));
+            curl_setopt($this->client->ch, CURLOPT_POSTFIELDS, http_build_query($form, '', '&'));
         }
 
         // Store received headers in temporary memory file, remember sent headers
