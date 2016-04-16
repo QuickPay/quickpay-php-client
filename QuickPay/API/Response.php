@@ -2,12 +2,12 @@
 namespace QuickPay\API;
 
 /**
- * @class         QuickPay_Response
- * @since        1.0.0
- * @package        QuickPay
- * @category    Class
- * @author         Patrick Tolvstein, Perfect Solution ApS
- * @docs        http://tech.quickpay.net/api/
+ * @class      QuickPay_Response
+ * @since      0.1.0
+ * @package    QuickPay
+ * @category   Class
+ * @author     Patrick Tolvstein, Perfect Solution ApS
+ * @docs       http://tech.quickpay.net/api/
  */
 class Response
 {
@@ -58,15 +58,16 @@ class Response
     }
 
     /**
-     * as_raw
+     * asRaw
      *
      * Returns the HTTP status code, headers and response body.
      * Usage: list($status_code, $headers, $response_body) = $response->as_raw().
      *
-     * @param  boolan $keep_authorization_value Normally the value of the Authorization: header is masked. True keeps the sent value.
-     * @return array            [integer, string[], string]
+     * @param  boolan $keep_authorization_value Normally the value of the
+     *                                          Authorization: header is masked. True keeps the sent value.
+     * @return array  [integer, string[], string]
      */
-    public function as_raw($keep_authorization_value = false)
+    public function asRaw($keep_authorization_value = false)
     {
         // To avoid unintentional logging of credentials the default is to mask the value of the Authorization: header
         if ($keep_authorization_value) {
@@ -93,13 +94,13 @@ class Response
     }
 
     /**
-     * as_array
+     * asArray
      *
      * Returns the response body as an array
      *
      * @return array
      */
-    public function as_array()
+    public function asArray()
     {
         if ($response = json_decode($this->response_data, true)) {
             return $response;
@@ -109,13 +110,13 @@ class Response
     }
 
     /**
-     * as_object
+     * asObject
      *
      * Returns the response body as an array
      *
      * @return \stdClass
      */
-    public function as_object()
+    public function asObject()
     {
         if ($response = json_decode($this->response_data)) {
             return $response;
@@ -125,25 +126,25 @@ class Response
     }
 
     /**
-     * http_status
+     * httpStatus
      *
      * Returns the http_status code
      *
      * @return int
      */
-    public function http_status()
+    public function httpStatus()
     {
         return $this->status_code;
     }
 
     /**
-     * is_success
+     * isSuccess
      *
      * Checks if the http status code indicates a succesful or an error response.
      *
      * @return boolean
      */
-    public function is_success()
+    public function isSuccess()
     {
         if ($this->status_code > 299) {
             return false;

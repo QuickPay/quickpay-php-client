@@ -102,27 +102,27 @@ Getting the `HTTP status code`:
 
 ```php5
 $response = $client->request->get('/payments');
-$status = $response->http_status();
+$status = $response->httpStatus();
 
 if ($status == 200) {
     // Successful request
 }
 ```
 
-The returned response object supports 3 different ways of returning the response body, `as_raw()`, `as_object`, `as_array()`.
+The returned response object supports 3 different ways of returning the response body, `asRaw()`, `asObject`, `asArray()`.
 
 ```php5
 // Get the HTTP status code, headers and raw response body.
-list($status_code, $headers, $response_body) = $client->request->get('/payments')->as_raw();
+list($status_code, $headers, $response_body) = $client->request->get('/payments')->asRaw();
 
 // Get the response body as an object
-$response_body = $client->request->get('/payments')->as_object();
+$response_body = $client->request->get('/payments')->asObject();
 
 // Get the response body as an array
-$response_body = $client->request->get('/payments')->as_array();
+$response_body = $client->request->get('/payments')->asArray();
 
 // Example usage
-$payments = $client->request->get('/payments')->as_array();
+$payments = $client->request->get('/payments')->asArray();
 
 foreach($payments as $payment) {
     //...

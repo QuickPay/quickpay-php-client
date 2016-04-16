@@ -5,12 +5,12 @@ use QuickPay\API\Constants;
 use QuickPay\API\Response;
 
 /**
- * @class         QuickPay_Request
- * @since        1.0.0
- * @package        QuickPay
- * @category    Class
- * @author         Patrick Tolvstein, Perfect Solution ApS
- * @docs        http://tech.quickpay.net/api/
+ * @class      QuickPay_Request
+ * @since      0.1.0
+ * @package    QuickPay
+ * @category   Class
+ * @author     Patrick Tolvstein, Perfect Solution ApS
+ * @docs       http://tech.quickpay.net/api/
  */
 class Request
 {
@@ -55,7 +55,7 @@ class Request
         }
 
         // Set the request params
-        $this->set_url($path);
+        $this->setUrl($path);
 
         // Start the request and return the response
         return $this->execute('GET');
@@ -72,7 +72,7 @@ class Request
     public function post($path, $form = array())
     {
         // Set the request params
-        $this->set_url($path);
+        $this->setUrl($path);
 
         // Start the request and return the response
         return $this->execute('POST', $form);
@@ -89,7 +89,7 @@ class Request
     public function put($path, $form = array())
     {
         // Set the request params
-        $this->set_url($path);
+        $this->setUrl($path);
 
         // Start the request and return the response
         return $this->execute('PUT', $form);
@@ -106,7 +106,7 @@ class Request
     public function patch($path, $form = array())
     {
         // Set the request params
-        $this->set_url($path);
+        $this->setUrl($path);
 
         // Start the request and return the response
         return $this->execute('PATCH', $form);
@@ -123,21 +123,21 @@ class Request
     public function delete($path, $form = array())
     {
         // Set the request params
-        $this->set_url($path);
+        $this->setUrl($path);
 
         // Start the request and return the response
         return $this->execute('DELETE', $form);
     }
 
     /**
-     * set_url function.
+     * setUrl function.
      *
      * Takes an API request string and appends it to the API url
      *
      * @access protected
      * @return void
      */
-    protected function set_url($params)
+    protected function setUrl($params)
     {
         curl_setopt($this->client->ch, CURLOPT_URL, Constants::API_URL . trim($params, '/'));
     }
@@ -171,7 +171,7 @@ class Request
         $response_data = curl_exec($this->client->ch);
 
         if (curl_errno($this->client->ch) !== 0) {
-            //An error occurred
+            // An error occurred
             fclose($fh_header);
             throw new Exception(curl_error($this->client->ch), curl_errno($this->client->ch));
         }

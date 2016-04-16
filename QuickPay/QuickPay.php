@@ -1,12 +1,6 @@
 <?php
 namespace QuickPay;
 
-require_once 'API/Constants.php';
-require_once 'API/Exception.php';
-require_once 'API/Client.php';
-require_once 'API/Request.php';
-require_once 'API/Response.php';
-
 use QuickPay\API\Client;
 use QuickPay\API\Request;
 
@@ -18,7 +12,6 @@ class QuickPay
      * @access public
      **/
     public $request;
-
 
     /**
     * __construct function.
