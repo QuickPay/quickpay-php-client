@@ -12,4 +12,4 @@ build:
 checks:
   php:
     custom_coding_standard:
-      ruleset_path: 'ruleset.xml'
+      ruleset_path: 'phpcs.xml'

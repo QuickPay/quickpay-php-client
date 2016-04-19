@@ -20,7 +20,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response($httpCode, '', '', '');
 
-        $result = $response->is_success();
+        $result = $response->isSuccess();
 
         $this->assertEquals($result, $expectedResult);
     }
@@ -48,7 +48,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response($httpCode, '', '', '');
 
-        $statusCode = $response->http_status();
+        $statusCode = $response->httpStatus();
 
         $this->assertEquals($statusCode, $expectedCode);
     }
@@ -66,7 +66,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, '', '', $this->responseTestData);
 
-        $responseArray = $response->as_array();
+        $responseArray = $response->asArray();
 
         $this->assertTrue(is_array($responseArray));
     }
@@ -75,7 +75,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, '', '', '');
 
-        $responseArray = $response->as_array();
+        $responseArray = $response->asArray();
 
         $this->assertTrue(is_array($responseArray));
     }
@@ -84,7 +84,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, '', '', $this->responseTestData);
 
-        $responseObject = $response->as_object();
+        $responseObject = $response->asObject();
 
         $this->assertTrue(is_object($responseObject));
     }
@@ -93,7 +93,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, '', '', '');
 
-        $responseObject = $response->as_object();
+        $responseObject = $response->asObject();
 
         $this->assertTrue(is_object($responseObject));
     }
@@ -102,7 +102,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, '', '', $this->responseTestData);
 
-        list($statusCode, $headers, $responseRaw) = $response->as_raw();
+        list($statusCode, $headers, $responseRaw) = $response->asRaw();
 
         $this->assertTrue(is_int($statusCode));
         $this->assertTrue(is_array($headers));

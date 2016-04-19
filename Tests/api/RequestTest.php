@@ -30,34 +30,34 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
         $response = $request->get('/ping');
 
-        $this->assertEquals(401, $response->http_status());
+        $this->assertEquals(401, $response->httpStatus());
     }
 
     public function testSuccessfulGetResponse()
     {
         $pingResponse = $this->request->get('/ping');
 
-        $this->assertTrue($pingResponse->is_success());
+        $this->assertTrue($pingResponse->isSuccess());
     }
 
     public function testFailedGetResponse()
     {
         $pingResponse = $this->request->get('/foobar');
 
-        $this->assertFalse($pingResponse->is_success());
+        $this->assertFalse($pingResponse->isSuccess());
     }
 
     public function testSuccesfulPostResponse()
     {
         $pingResponse = $this->request->post('/ping');
 
-        $this->assertTrue($pingResponse->is_success());
+        $this->assertTrue($pingResponse->isSuccess());
     }
 
     public function testFailedPostResponse()
     {
         $pingResponse = $this->request->post('/foobar');
 
-        $this->assertFalse($pingResponse->is_success());
+        $this->assertFalse($pingResponse->isSuccess());
     }
 }
