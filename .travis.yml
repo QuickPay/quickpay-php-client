@@ -21,7 +21,7 @@ before_script:
   - mkdir -p build/logs
 
 script:
-  - phpunit --coverage-clover build/logs/clover.xml ./Tests
+  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml ./Tests
   - vendor/bin/phpcs --runtime-set ignore_warnings_on_exit 1 --standard=phpcs.xml QuickPay
 
 after_script:
