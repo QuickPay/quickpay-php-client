@@ -95,6 +95,11 @@ $form = array(
     ...
 );
 $payments = $client->request->post('/payments', $form);
+$status = $payments->httpStatus();
+if ($status == 201) {
+    // Successful created
+}
+
 ```
 
 ### Handling the response
