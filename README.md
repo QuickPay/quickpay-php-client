@@ -14,7 +14,7 @@ Simply add a dependency on quickpay/quickpay-php-client to your project's compos
 ```
 {
     "require": {
-        "quickpay/quickpay-php-client": "0.1.*"
+        "quickpay/quickpay-php-client": "1.0.*"
     }
 }
 ```
