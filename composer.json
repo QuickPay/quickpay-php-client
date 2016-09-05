@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3.3",
-        "lib/curl": "*"
+        "ext-curl": "*"
     },
     "autoload": {
         "psr-4": {
