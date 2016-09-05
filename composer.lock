@@ -4,53 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "78314375a8774564ca1876c1f16acf50",
-    "content-hash": "1c8c238aca547d6322293209641ab3e7",
-    "packages": [
-        {
-            "name": "lib/curl",
-            "version": "0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/andrefigueira/Lib-Curl.git",
-                "reference": "b9980c40309a401782a84e262d757a1bf6b8b71a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/andrefigueira/Lib-Curl/zipball/b9980c40309a401782a84e262d757a1bf6b8b71a",
-                "reference": "b9980c40309a401782a84e262d757a1bf6b8b71a",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Curl": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "André Figueira",
-                    "email": "andre.figueira@me.com",
-                    "homepage": "http://www.andrefigueira.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A simple cURL wrapper for PHP",
-            "homepage": "https://github.com/andrefigueira/Lib-Curl",
-            "keywords": [
-                "class",
-                "curl",
-                "http",
-                "php",
-                "wrapper"
-            ],
-            "time": "2014-05-01 10:27:38"
-        }
-    ],
+    "hash": "fd538d10aaa0e794a7201eca6240aa7f",
+    "content-hash": "a5c0bfe65b72f6396a01edf278b8f922",
+    "packages": [],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",
@@ -1684,7 +1640,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "ext-curl": "*"
     },
     "platform-dev": []
 }
