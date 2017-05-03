@@ -14,18 +14,19 @@ class QuickPay
     public $request;
 
     /**
-    * __construct function.
-    *
-    * Instantiates the main class.
-    * Creates a client which is passed to the request construct.
-    *
-    * @auth_string string Authentication string for QuickPay
-    *
-    * @access public
-    */
-    public function __construct($auth_string = '')
+     * __construct function.
+     *
+     * Instantiates the main class.
+     * Creates a client which is passed to the request construct.
+     *
+     * @param string $auth_string	Authentication string for QuickPay. Format 'username:password' or ':apiKey'
+     * @param string $base_url		Optional: Use a secondary API (eg billing)
+     *
+     * @access public
+     */
+    public function __construct($auth_string = '', $base_url = \QuickPay\API\Constants::API_URL)
     {
-        $client = new Client($auth_string);
+        $client = new Client($auth_string, $base_url);
         $this->request = new Request($client);
     }
 }
