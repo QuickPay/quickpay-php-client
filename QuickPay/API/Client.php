@@ -18,11 +18,11 @@ class Client
      */
     public $ch;
 
-	/**
-	 * Base url for the selected API.
-	 *
-	 * @var string
-	 */
+    /**
+     * Base url for the selected API.
+     *
+     * @var string
+     */
     public $base_url;
 
     /**
@@ -38,10 +38,10 @@ class Client
      * Instantiate object
      *
      * @access public
-	 * @param string $auth_string	Format 'username:password' or ':apiKey'
-	 * @param string $base_url		The API to call. Use on of the constants.
-	 * @throws Exception
-	 */
+     * @param string $auth_string	Format 'username:password' or ':apiKey'
+     * @param string $base_url		The API to call. Use on of the constants.
+     * @throws Exception
+     */
     public function __construct($auth_string = '', $base_url = Constants::API_URL)
     {
         // Check if lib cURL is enabled
@@ -53,7 +53,7 @@ class Client
         $this->auth_string = $auth_string;
 
         // Set base url of selected API
-		$this->base_url =  $base_url;
+        $this->base_url =  $base_url;
 
         // Instantiate cURL object
         $this->authenticate();
@@ -84,20 +84,20 @@ class Client
     {
         $this->ch = curl_init();
 
-		$headers = array();
-		switch ($this->base_url) {
-			case Constants::API_URL_INVOICING:
-				$headers[] = 'Accept: application/vnd.api+json';
-				break;
+        $headers = array();
+        switch ($this->base_url) {
+            case Constants::API_URL_INVOICING:
+                $headers[] = 'Accept: application/vnd.api+json';
+                break;
 
-			case Constants::API_URL:
-				$headers[] = 'Accept-Version: v' . Constants::API_VERSION;
-				$headers[] = 'Accept: application/json';
-				break;
+            case Constants::API_URL:
+                $headers[] = 'Accept-Version: v' . Constants::API_VERSION;
+                $headers[] = 'Accept: application/json';
+                break;
 
-			default:
-				break;
-		}
+            default:
+                break;
+        }
 
         if (!empty($this->auth_string)) {
             $headers[] = 'Authorization: Basic ' . base64_encode($this->auth_string);

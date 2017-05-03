@@ -19,8 +19,8 @@ class QuickPay
      * Instantiates the main class.
      * Creates a client which is passed to the request construct.
      *
-     * @param string $auth_string	Authentication string for QuickPay. Format 'username:password' or ':apiKey'
-     * @param string $base_url		Optional: Use a secondary API (eg billing)
+     * @param string $auth_string    Authentication string for QuickPay. Format 'username:password' or ':apiKey'
+     * @param string $base_url       Optional: Use a secondary API (eg billing)
      *
      * @access public
      */
