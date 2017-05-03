@@ -38,8 +38,8 @@ class Client
      * Instantiate object
      *
      * @access public
-     * @param string $auth_string	Format 'username:password' or ':apiKey'
-     * @param string $base_url		The API to call. Use on of the constants.
+     * @param string $auth_string   Format 'username:password' or ':apiKey'
+     * @param string $base_url      The API to call. Use on of the constants.
      * @throws Exception
      */
     public function __construct($auth_string = '', $base_url = Constants::API_URL)
