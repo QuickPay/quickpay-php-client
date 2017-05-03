@@ -1,8 +1,9 @@
 <?php
 namespace QuickPay\API;
+
 /**
  * @class       QuickPay_Constants
- * @since       1.0.0
+ * @since       0.1.0
  * @package     QuickPay
  * @category    Class
  * @author      Patrick Tolvstein, Perfect Solution ApS

@@ -5,12 +5,12 @@ use QuickPay\API\Constants;
 use QuickPay\API\Response;
 
 /**
- * @class         QuickPay_Request
- * @since        1.0.0
- * @package        QuickPay
- * @category    Class
- * @author         Patrick Tolvstein, Perfect Solution ApS
- * @docs        http://tech.quickpay.net/api/
+ * @class      QuickPay_Request
+ * @since      0.1.0
+ * @package    QuickPay
+ * @category   Class
+ * @author     Patrick Tolvstein, Perfect Solution ApS
+ * @docs       http://tech.quickpay.net/api/
  */
 class Request
 {
@@ -27,9 +27,8 @@ class Request
      * Instantiates the object
      *
      * @access public
-     * @return object
      */
-    public function __construct( $client )
+    public function __construct($client)
     {
         $this->client = $client;
     }
@@ -44,19 +43,19 @@ class Request
      * @param  array  $query
      * @return Response
      */
-    public function get( $path, $query = array() )
+    public function get($path, $query = array())
     {
         // Add query parameters to $path?
-        if ($query) {
-            if (strpos($path, '?') === false ) {
-                $path .= '?' . http_build_query($query);
+        if (!empty($query)) {
+            if (strpos($path, '?') === false) {
+                $path .= '?' . http_build_query($query, '', '&');
             } else {
-                $path .= ini_get('arg_separator.output') . http_build_query($query);
+                $path .= ini_get('arg_separator.output') . http_build_query($query, '', '&');
             }
         }
 
         // Set the request params
-        $this->set_url($path);
+        $this->setUrl($path);
 
         // Start the request and return the response
         return $this->execute('GET');
@@ -70,10 +69,10 @@ class Request
      * @access public
      * @return Response
      */
-    public function post( $path, $form = array() )
+    public function post($path, $form = array())
     {
         // Set the request params
-        $this->set_url($path);
+        $this->setUrl($path);
 
         // Start the request and return the response
         return $this->execute('POST', $form);
@@ -87,10 +86,10 @@ class Request
      * @access public
      * @return Response
      */
-    public function put( $path, $form = array() )
+    public function put($path, $form = array())
     {
         // Set the request params
-        $this->set_url($path);
+        $this->setUrl($path);
 
         // Start the request and return the response
         return $this->execute('PUT', $form);
@@ -104,10 +103,10 @@ class Request
      * @access public
      * @return Response
      */
-    public function patch( $path, $form = array() )
+    public function patch($path, $form = array())
     {
         // Set the request params
-        $this->set_url($path);
+        $this->setUrl($path);
 
         // Start the request and return the response
         return $this->execute('PATCH', $form);
@@ -121,24 +120,24 @@ class Request
      * @access public
      * @return Response
      */
-    public function delete( $path, $form = array() )
+    public function delete($path, $form = array())
     {
         // Set the request params
-        $this->set_url($path);
+        $this->setUrl($path);
 
         // Start the request and return the response
         return $this->execute('DELETE', $form);
     }
 
     /**
-     * set_url function.
+     * setUrl function.
      *
      * Takes an API request string and appends it to the API url
      *
      * @access protected
      * @return void
      */
-    protected function set_url( $params )
+    protected function setUrl($params)
     {
         curl_setopt($this->client->ch, CURLOPT_URL, Constants::API_URL . trim($params, '/'));
     }
@@ -153,18 +152,18 @@ class Request
      * @param  array  $form
      * @return Response
      */
-    protected function execute( $request_type, $form = array() )
+    protected function execute($request_type, $form = array())
     {
         // Set the HTTP request type
         curl_setopt($this->client->ch, CURLOPT_CUSTOMREQUEST, $request_type);
 
         // If additional data is delivered, we will send it along with the API request
         if (is_array($form) && ! empty($form)) {
-            curl_setopt($this->client->ch, CURLOPT_POSTFIELDS, http_build_query($form));
+            curl_setopt($this->client->ch, CURLOPT_POSTFIELDS, http_build_query($form, '', '&'));
         }
 
         // Store received headers in temporary memory file, remember sent headers
-        $fh_header = fopen('php://memory', 'w+');
+        $fh_header = fopen('php://temp', 'w+');
         curl_setopt($this->client->ch, CURLOPT_WRITEHEADER, $fh_header);
         curl_setopt($this->client->ch, CURLINFO_HEADER_OUT, true);
 
@@ -172,7 +171,7 @@ class Request
         $response_data = curl_exec($this->client->ch);
 
         if (curl_errno($this->client->ch) !== 0) {
-            //An error occurred
+            // An error occurred
             fclose($fh_header);
             throw new Exception(curl_error($this->client->ch), curl_errno($this->client->ch));
         }
@@ -189,5 +188,4 @@ class Request
         // Return the response object.
         return new Response($response_code, $sent_headers, $received_headers, $response_data);
     }
-
 }

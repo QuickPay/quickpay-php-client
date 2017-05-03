@@ -6,10 +6,11 @@ use QuickPay\API\Response;
 
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
-
     private $responseTestData = '{ "key1": "value1", "key2": "value2" }';
 
     /**
+     * Test the success response HTTP codes.
+     *
      * @param string $httpCode       The HTTP code we want to test
      * @param string $expectedResult What we expect the result to be
      *
@@ -19,7 +20,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response($httpCode, '', '', '');
 
-        $result = $response->is_success();
+        $result = $response->isSuccess();
 
         $this->assertEquals($result, $expectedResult);
     }
@@ -27,15 +28,17 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     public function providerTestSuccessResponseHTTPCodes()
     {
         return array(
-        array(200, true),
-        array(255, true),
+            array(200, true),
+            array(255, true),
             array(299, true),
             array(300, false),
-        array(400, false)
+            array(400, false)
         );
     }
 
     /**
+     * Test the return of HTTP status codes.
+     *
      * @param string $httpCode     The HTTP code we want to test
      * @param string $expectedCode What we expect the result to be
      *
@@ -45,7 +48,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response($httpCode, '', '', '');
 
-        $statusCode = $response->http_status();
+        $statusCode = $response->httpStatus();
 
         $this->assertEquals($statusCode, $expectedCode);
     }
@@ -63,7 +66,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, '', '', $this->responseTestData);
 
-        $responseArray = $response->as_array();
+        $responseArray = $response->asArray();
 
         $this->assertTrue(is_array($responseArray));
     }
@@ -72,7 +75,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, '', '', '');
 
-        $responseArray = $response->as_array();
+        $responseArray = $response->asArray();
 
         $this->assertTrue(is_array($responseArray));
     }
@@ -81,7 +84,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, '', '', $this->responseTestData);
 
-        $responseObject = $response->as_object();
+        $responseObject = $response->asObject();
 
         $this->assertTrue(is_object($responseObject));
     }
@@ -90,7 +93,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, '', '', '');
 
-        $responseObject = $response->as_object();
+        $responseObject = $response->asObject();
 
         $this->assertTrue(is_object($responseObject));
     }
@@ -99,11 +102,10 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, '', '', $this->responseTestData);
 
-        list($statusCode, $headers, $responseRaw) = $response->as_raw();
+        list($statusCode, $headers, $responseRaw) = $response->asRaw();
 
         $this->assertTrue(is_int($statusCode));
         $this->assertTrue(is_array($headers));
         $this->assertTrue(is_string($responseRaw));
     }
-
 }

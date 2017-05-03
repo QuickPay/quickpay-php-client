@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!--suppress XmlUnboundNsPrefix -->
+<ruleset name="PHP-SDK">
+ <description>The QuickPay ruleset based on the PSR-2 coding standard.</description>
+ <rule ref="PSR2"/>
+</ruleset>
