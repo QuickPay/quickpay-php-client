@@ -60,4 +60,70 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($pingResponse->isSuccess());
     }
+
+    public function testBasket()
+    {
+        $basket = [];
+        $basket[0] = [
+            'qty' => 1,
+            'item_no' => 2,
+            'item_name' => 'Test 1',
+            'item_price' => 100,
+            'vat_rate' => 0.25,
+        ];
+        $basket[1] = [
+            'qty' => 1,
+            'item_no' => 2,
+            'item_name' => 'Test 2',
+            'item_price' => 100,
+            'vat_rate' => 0.25,
+        ];
+
+        $form = [
+            'currency' => 'DKK',
+            'order_id' => 1,
+            'basket' => $basket,
+        ];
+
+        $query = $this->crpost($form);
+        print_r(urldecode($query));
+
+        $payment = $this->request->post('/payments', $form);
+
+    }
+
+    /**
+     * Remove keys of multi array to post
+     *
+     * @param array $a
+     * @param string $b
+     * @param int $c
+     * @return bool|string
+     */
+    public function handleArrayData($a, $b = '', $c=0)
+    {
+        if (!is_array($a)) {
+            return false;
+        }
+        foreach ((array)$a as $k => $v) {
+            if ($c) {
+                if(is_numeric($k)) {
+                    $k = $b."[]";
+                } else {
+                    $k = $b."[$k]";
+                }
+            } else {
+                if (is_int($k)) {
+                    $k = $b.$k;
+                }
+            }
+
+            if (is_array($v)||is_object($v)) {
+                $r[] = $this->crpost($v,$k,1);
+                continue;
+            }
+            $r[] = urlencode($k)."=".urlencode($v);
+        }
+        return implode("&", $r);
+    }
 }
