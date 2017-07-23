@@ -61,6 +61,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($pingResponse->isSuccess());
     }
 
+    /**
+     * Test function added to make sure that issue gh-54 is fixed.
+     */
     public function testBasket()
     {
         $basket = [];
@@ -85,45 +88,10 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             'basket' => $basket,
         ];
 
-        $query = $this->crpost($form);
-        print_r(urldecode($query));
+        $query = $this->request->httpBuildQuery($form);
 
-        $payment = $this->request->post('/payments', $form);
+        $expected = 'currency=DKK&order_id=1&basket[][qty]=1&basket[][item_no]=2&basket[][item_name]=Test 1&basket[][item_price]=100&basket[][vat_rate]=0.25&basket[][qty]=1&basket[][item_no]=2&basket[][item_name]=Test 2&basket[][item_price]=100&basket[][vat_rate]=0.25';
 
-    }
-
-    /**
-     * Remove keys of multi array to post
-     *
-     * @param array $a
-     * @param string $b
-     * @param int $c
-     * @return bool|string
-     */
-    public function handleArrayData($a, $b = '', $c=0)
-    {
-        if (!is_array($a)) {
-            return false;
-        }
-        foreach ((array)$a as $k => $v) {
-            if ($c) {
-                if(is_numeric($k)) {
-                    $k = $b."[]";
-                } else {
-                    $k = $b."[$k]";
-                }
-            } else {
-                if (is_int($k)) {
-                    $k = $b.$k;
-                }
-            }
-
-            if (is_array($v)||is_object($v)) {
-                $r[] = $this->crpost($v,$k,1);
-                continue;
-            }
-            $r[] = urlencode($k)."=".urlencode($v);
-        }
-        return implode("&", $r);
+        $this->assertEquals(urldecode($query), $expected);
     }
 }
