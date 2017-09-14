@@ -12,8 +12,13 @@ namespace QuickPay\API;
 class Constants
 {
     /**
-     * API DEFINITIONS
+     * Primary API
      */
     const API_URL = 'https://api.quickpay.net/';
     const API_VERSION = '10';
+
+    /**
+     * Invoicing API
+     */
+    const API_URL_INVOICING = 'https://invoicing.quickpay.net/';
 }

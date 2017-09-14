@@ -18,6 +18,7 @@ class Request
      * Contains QuickPay_Client instance
      *
      * @access protected
+     * @var Client
      */
     protected $client;
 
@@ -139,7 +140,7 @@ class Request
      */
     protected function setUrl($params)
     {
-        curl_setopt($this->client->ch, CURLOPT_URL, Constants::API_URL . trim($params, '/'));
+        curl_setopt($this->client->ch, CURLOPT_URL, $this->client->base_url . trim($params, '/'));
     }
 
     /**
