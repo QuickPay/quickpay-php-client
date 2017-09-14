@@ -60,4 +60,38 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($pingResponse->isSuccess());
     }
+
+    /**
+     * Test function added to make sure that issue gh-54 is fixed.
+     */
+    public function testBasket()
+    {
+        $basket = [];
+        $basket[0] = [
+            'qty' => 1,
+            'item_no' => 2,
+            'item_name' => 'Test 1',
+            'item_price' => 100,
+            'vat_rate' => 0.25,
+        ];
+        $basket[1] = [
+            'qty' => 1,
+            'item_no' => 2,
+            'item_name' => 'Test 2',
+            'item_price' => 100,
+            'vat_rate' => 0.25,
+        ];
+
+        $form = [
+            'currency' => 'DKK',
+            'order_id' => 1,
+            'basket' => $basket,
+        ];
+
+        $query = $this->request->httpBuildQuery($form);
+
+        $expected = 'currency=DKK&order_id=1&basket[][qty]=1&basket[][item_no]=2&basket[][item_name]=Test 1&basket[][item_price]=100&basket[][vat_rate]=0.25&basket[][qty]=1&basket[][item_no]=2&basket[][item_name]=Test 2&basket[][item_price]=100&basket[][vat_rate]=0.25';
+
+        $this->assertEquals(urldecode($query), $expected);
+    }
 }
