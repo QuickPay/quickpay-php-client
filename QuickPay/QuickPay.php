@@ -14,6 +14,11 @@ class QuickPay
     public $request;
 
     /**
+     * @access protected
+     */
+    protected $client;
+
+    /**
     * __construct function.
     *
     * Instantiates the main class.
@@ -23,9 +28,23 @@ class QuickPay
     *
     * @access public
     */
-    public function __construct($auth_string = '')
+    public function __construct($auth_string = '', $additional_headers = array())
     {
-        $client = new Client($auth_string);
-        $this->request = new Request($client);
+        $this->client = new Client($auth_string, $additional_headers);
+        $this->request = new Request($this->client);
+    }
+
+    /**
+     * Add additional headers to request.
+     *
+     * This could be used when need to test a callback url in dev mode
+     *
+     *      QuickPay-Callback-Url: http://text.url/callback
+     *
+     * @access public
+     */
+    public function setHeaders($additional_headers = array())
+    {
+        $this->client->setHeaders($additional_headers);
     }
 }
