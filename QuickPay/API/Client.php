@@ -98,5 +98,4 @@ class Client
         }
         return curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->headers);
     }
-
 }
