@@ -46,22 +46,27 @@ class Client
             throw new Exception('Lib cURL must be enabled on the server');
         }
 
-        // Set auth string property
+        // Save authentication string
         $this->auth_string = $auth_string;
 
-        // Set headers
+        // Create cURL instance.
+        $this->ch = curl_init();
+        curl_setopt_array($this->ch, array(
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_HTTPAUTH => CURLAUTH_BASIC
+        ));
+
+        // Default headers
         $this->headers = array(
             'Accept-Version: v10',
             'Accept: application/json',
         );
-
         if (!empty($this->auth_string)) {
             $this->headers[] = 'Authorization: Basic ' . base64_encode($this->auth_string);
         }
 
-        // Instantiate cURL object
-        $this->authenticate();
-
+        // Add custom headers and set headers in cURL object.
         $this->setHeaders($additional_headers);
     }
 
@@ -80,12 +85,13 @@ class Client
     }
 
     /**
-     * Set additinal headers to cURL
+     * Set additional headers for cURL request.
      *
+     * @param string[] $additional_headers
      * @access public
-     * @return boolean
+     * @return bool
      */
-    public function setHeaders($additional_headers = array())
+    public function setHeaders($additional_headers)
     {
         if (!empty($additional_headers)) {
             $this->headers = array_merge($this->headers, $additional_headers);
@@ -93,23 +99,4 @@ class Client
         return curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->headers);
     }
 
-    /**
-     * authenticate function.
-     *
-     * Create a cURL instance with authentication headers
-     *
-     * @access public
-     */
-    protected function authenticate()
-    {
-        $this->ch = curl_init();
-
-        $options = array(
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => true,
-            CURLOPT_HTTPAUTH => CURLAUTH_BASIC
-        );
-
-        curl_setopt_array($this->ch, $options);
-    }
 }

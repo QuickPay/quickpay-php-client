@@ -8,6 +8,14 @@ use QuickPay\API\Response;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * @var Client
+	 */
+    protected $client;
+
+	/**
+	 * @var Request
+	 */
     protected $request;
 
     public function setUp()

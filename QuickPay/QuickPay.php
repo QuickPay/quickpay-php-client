@@ -10,28 +10,24 @@ class QuickPay
      * Contains the QuickPay_Request object
      *
      * @access public
-     **/
+     * @var Request
+     */
     public $request;
 
     /**
-     * @access protected
+     * __construct function.
+     *
+     * Instantiates the main class.
+     * Creates a client which is passed to the request construct.
+     *
+     * @auth_string string Authentication string for QuickPay
+     *
+     * @access public
      */
-    protected $client;
-
-    /**
-    * __construct function.
-    *
-    * Instantiates the main class.
-    * Creates a client which is passed to the request construct.
-    *
-    * @auth_string string Authentication string for QuickPay
-    *
-    * @access public
-    */
     public function __construct($auth_string = '', $additional_headers = array())
     {
-        $this->client = new Client($auth_string, $additional_headers);
-        $this->request = new Request($this->client);
+        $client = new Client($auth_string, $additional_headers);
+        $this->request = new Request($client);
     }
 
     /**
@@ -45,6 +41,6 @@ class QuickPay
      */
     public function setHeaders($additional_headers = array())
     {
-        $this->client->setHeaders($additional_headers);
+        $this->request->client->setHeaders($additional_headers);
     }
 }
