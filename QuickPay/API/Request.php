@@ -160,7 +160,7 @@ class Request
 
         // If additional data is delivered, we will send it along with the API request
         if (is_array($form) && ! empty($form)) {
-            curl_setopt($this->client->ch, CURLOPT_POSTFIELDS, $this->httpBuildQuery($form, '', '&'));
+            curl_setopt($this->client->ch, CURLOPT_POSTFIELDS, $this->httpBuildQuery($form));
         }
 
         // Store received headers in temporary memory file, remember sent headers
@@ -200,7 +200,7 @@ class Request
      */
     public function httpBuildQuery($query)
     {
-        $query = http_build_query($query);
+        $query = http_build_query($query, '', '&');
         $query = preg_replace('/%5B[0-9]+%5D/i', '%5B%5D', $query);
         return $query;
     }
