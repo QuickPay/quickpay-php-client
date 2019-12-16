@@ -17,9 +17,10 @@ class Request
     /**
      * Contains QuickPay_Client instance
      *
-     * @access protected
+     * @access public
+     * @var Client
      */
-    protected $client;
+    public $client;
 
     /**
      * __construct function.

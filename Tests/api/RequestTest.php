@@ -8,12 +8,20 @@ use QuickPay\API\Response;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * @var Client
+	 */
+    protected $client;
+
+	/**
+	 * @var Request
+	 */
     protected $request;
 
     public function setUp()
     {
-        $client = new Client();
-        $this->request = new Request($client);
+        $this->client = new Client();
+        $this->request = new Request($this->client);
     }
 
     public function testResponseInstance()
@@ -93,5 +101,29 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $expected = 'currency=DKK&order_id=1&basket[][qty]=1&basket[][item_no]=2&basket[][item_name]=Test 1&basket[][item_price]=100&basket[][vat_rate]=0.25&basket[][qty]=1&basket[][item_no]=2&basket[][item_name]=Test 2&basket[][item_price]=100&basket[][vat_rate]=0.25';
 
         $this->assertEquals(urldecode($query), $expected);
+    }
+
+    public function testStandardHeaders()
+    {
+        $pingResponse = $this->request->get('/ping');
+        $this->assertContains('Accept: application/json', curl_getinfo($this->client->ch, CURLINFO_HEADER_OUT));
+    }
+
+    public function testAdditionalHeadersOnInit()
+    {
+        $extra_headers = array('SpecialVar: foo');
+        $client = new Client(null, $extra_headers);
+        $request = new Request($client);
+        $pingResponse = $request->get('/ping');
+        $this->assertContains($extra_headers[0], curl_getinfo($client->ch, CURLINFO_HEADER_OUT));
+    }
+
+    public function testAdditionalHeadersAfterInit()
+    {
+        $extra_headers = array('NewVar: foo');
+        $this->client->setHeaders($extra_headers);
+        $request = new Request($this->client);
+        $pingResponse = $request->get('/ping');
+        $this->assertContains($extra_headers[0], curl_getinfo($this->client->ch, CURLINFO_HEADER_OUT));
     }
 }
