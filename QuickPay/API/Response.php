@@ -193,7 +193,7 @@ class Response
      *
      * @param string|false $key
      */
-    public function getHeader(string $key)
+    public function getHeader($key)
     {
         $result = false;
         $headers = $this->getHeaders();
