@@ -114,6 +114,18 @@ if ($status == 200) {
 }
 ```
 
+Getting `HTTP response headers`:
+
+```php5
+$response = $client->request->get('/payments');
+
+// Get all headers as key-value pair array
+$headers = $response->getHeaders();
+
+// Get a single header or the default value of false (e.g. Server)
+$header = $response->getHeader('Server');
+```
+
 The returned response object supports 3 different ways of returning the response body, `asRaw()`, `asObject`, `asArray()`.
 
 ```php5
