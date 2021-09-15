@@ -1,0 +1,26 @@
+name: Test and Lint on Push and PR
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: "ubuntu-20.04"
+    strategy:
+      matrix:
+        php:
+          - 5.6
+          - 7.0
+          - 7.1
+          - 7.2
+          - 7.3
+          - 7.4
+          - nightly
+    steps:
+      - uses: actions/checkout@v2
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "${{matrix.php}}"
+      - run: composer self-update && composer install --no-interaction
+      - run: mkdir -p build/logs
+      - run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml ./Tests && vendor/bin/phpcs --runtime-set ignore_warnings_on_exit 1 --standard=phpcs.xml QuickPay
+      - run: php vendor/bin/coveralls -v
