@@ -20,7 +20,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: "${{matrix.php}}"
-      - run: composer self-update && composer install --no-interaction
+      - run: composer update && composer install --no-interaction
       - run: mkdir -p build/logs
       - run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml ./Tests && vendor/bin/phpcs --runtime-set ignore_warnings_on_exit 1 --standard=phpcs.xml QuickPay
       - run: php vendor/bin/coveralls -v
