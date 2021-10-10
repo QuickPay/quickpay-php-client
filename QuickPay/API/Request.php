@@ -10,7 +10,7 @@ use QuickPay\API\Response;
  * @package    QuickPay
  * @category   Class
  * @author     Patrick Tolvstein, Perfect Solution ApS
- * @docs       http://tech.quickpay.net/api/
+ * @docs       http://learn.quickpay.net/tech-talk/api//
  */
 class Request
 {

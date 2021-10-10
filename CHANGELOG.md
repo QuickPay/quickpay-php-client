@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.1 - 2021-10-10
+
+- Changed QuickPay API docs link reference.
+
 ## 1.1.0 - 2019-12-16
 
 - Support for additional headers in requests - fixes [issue 56](https://github.com/QuickPay/quickpay-php-client/issues/56).

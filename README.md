@@ -3,7 +3,7 @@ quickpay-php-client
 
 [![Build Status](https://travis-ci.org/QuickPay/quickpay-php-client.svg)](https://travis-ci.org/QuickPay/quickpay-php-client) [![Code Coverage](https://scrutinizer-ci.com/g/QuickPay/quickpay-php-client/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/QuickPay/quickpay-php-client/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/QuickPay/quickpay-php-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/QuickPay/quickpay-php-client/?branch=master) [![Latest Stable Version](https://poser.pugx.org/quickpay/quickpay-php-client/v/stable)](https://packagist.org/packages/quickpay/quickpay-php-client) [![Total Downloads](https://poser.pugx.org/quickpay/quickpay-php-client/downloads)](https://packagist.org/packages/quickpay/quickpay-php-client) [![License](https://poser.pugx.org/quickpay/quickpay-php-client/license)](https://packagist.org/packages/quickpay/quickpay-php-client)
 
-`quickpay-php-client` is a official client for [QuickPay API](http://tech.quickpay.net/api). The QuickPay API enables you to accept payments in a secure and reliable manner. This package currently support QuickPay `v10` api.
+`quickpay-php-client` is a official client for [QuickPay API](http://learn.quickpay.net/tech-talk/api/). The QuickPay API enables you to accept payments in a secure and reliable manner. This package currently support QuickPay `v10` api.
 
 ## Installation
 
@@ -135,7 +135,7 @@ foreach($payments as $payment) {
 
 ```
 
-You can read more about api responses at [http://tech.quickpay.net/api/](http://tech.quickpay.net/api).
+You can read more about api responses at [http://learn.quickpay.net/tech-talk/api//](http://learn.quickpay.net/tech-talk/api/).
 
 ## Tests
 
