@@ -2,12 +2,13 @@
 
 namespace QuickPay\Tests;
 
+use PHPUnit\Framework\TestCase;
 use QuickPay\API\Exception;
 
-class ExceptionTest extends \PHPUnit_Framework_TestCase
+class ExceptionTest extends TestCase
 {
     private $testMessage = 'Quickpay Message';
-    private $testCode = 100;
+    private $testCode    = 100;
 
     public function testThrownExceptionValues()
     {

@@ -2,67 +2,88 @@
 
 namespace QuickPay\Tests;
 
+use PHPUnit\Framework\TestCase;
 use QuickPay\API\Client;
 use QuickPay\API\Request;
 use QuickPay\API\Response;
 
-class RequestTest extends \PHPUnit_Framework_TestCase
+class RequestTest extends TestCase
 {
-	/**
-	 * @var Client
-	 */
+    /**
+     * @var Client
+     */
     protected $client;
 
-	/**
-	 * @var Request
-	 */
+    /**
+     * @var Request
+     */
     protected $request;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->client = new Client();
+        parent::setUp();
+
+        $this->client  = new Client();
         $this->request = new Request($this->client);
     }
 
-    public function testResponseInstance()
+    /**
+     * @test
+     */
+    public function responseInstance()
     {
         $pingResponse = $this->request->get('/ping');
 
         $this->assertTrue(($pingResponse instanceof Response));
     }
 
-    public function testBadAuthentication()
+    /**
+     * @test
+     */
+    public function badAuthentication()
     {
-        $client = new Client(':foo');
+        $client  = new Client(':foo');
         $request = new Request($client);
 
         $response = $request->get('/ping');
 
-        $this->assertEquals(401, $response->httpStatus());
+        $this->assertSame(401, $response->httpStatus());
     }
 
-    public function testSuccessfulGetResponse()
+    /**
+     * @test
+     */
+    public function successfulGetResponse()
     {
         $pingResponse = $this->request->get('/ping');
 
         $this->assertTrue($pingResponse->isSuccess());
     }
 
-    public function testFailedGetResponse()
+    /**
+     * @test
+     */
+    public function failedGetResponse()
     {
         $pingResponse = $this->request->get('/foobar');
 
         $this->assertFalse($pingResponse->isSuccess());
     }
 
-    public function testSuccesfulPostResponse()
+    /**
+     * @test
+     */
+    public function succesfulPostResponse()
     {
         $pingResponse = $this->request->post('/ping');
 
         $this->assertTrue($pingResponse->isSuccess());
     }
 
-    public function testFailedPostResponse()
+    /**
+     * @test
+     */
+    public function failedPostResponse()
     {
         $pingResponse = $this->request->post('/foobar');
 
@@ -71,59 +92,72 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test function added to make sure that issue gh-54 is fixed.
+     *
+     * @test
      */
-    public function testBasket()
+    public function basket()
     {
-        $basket = [];
+        $basket    = [];
         $basket[0] = [
-            'qty' => 1,
-            'item_no' => 2,
-            'item_name' => 'Test 1',
+            'qty'        => 1,
+            'item_no'    => 2,
+            'item_name'  => 'Test 1',
             'item_price' => 100,
-            'vat_rate' => 0.25,
+            'vat_rate'   => 0.25,
         ];
         $basket[1] = [
-            'qty' => 1,
-            'item_no' => 2,
-            'item_name' => 'Test 2',
+            'qty'        => 1,
+            'item_no'    => 2,
+            'item_name'  => 'Test 2',
             'item_price' => 100,
-            'vat_rate' => 0.25,
+            'vat_rate'   => 0.25,
         ];
 
         $form = [
             'currency' => 'DKK',
             'order_id' => 1,
-            'basket' => $basket,
+            'basket'   => $basket,
         ];
 
         $query = $this->request->httpBuildQuery($form);
 
         $expected = 'currency=DKK&order_id=1&basket[][qty]=1&basket[][item_no]=2&basket[][item_name]=Test 1&basket[][item_price]=100&basket[][vat_rate]=0.25&basket[][qty]=1&basket[][item_no]=2&basket[][item_name]=Test 2&basket[][item_price]=100&basket[][vat_rate]=0.25';
 
-        $this->assertEquals(urldecode($query), $expected);
+        $this->assertSame(urldecode($query), $expected);
     }
 
-    public function testStandardHeaders()
+    /**
+     * @test
+     */
+    public function standardHeaders()
     {
-        $pingResponse = $this->request->get('/ping');
-        $this->assertContains('Accept: application/json', curl_getinfo($this->client->ch, CURLINFO_HEADER_OUT));
+        $this->request->get('/ping');
+        $this->assertStringContainsString('accept: application/json', curl_getinfo($this->client->ch, CURLINFO_HEADER_OUT));
     }
 
-    public function testAdditionalHeadersOnInit()
+    /**
+     * @test
+     */
+    public function additionalHeadersOnInit()
     {
-        $extra_headers = array('SpecialVar: foo');
-        $client = new Client(null, $extra_headers);
-        $request = new Request($client);
-        $pingResponse = $request->get('/ping');
-        $this->assertContains($extra_headers[0], curl_getinfo($client->ch, CURLINFO_HEADER_OUT));
+        $extra_headers = ['specialvar: foo'];
+        $client        = new Client(null, $extra_headers);
+        $request       = new Request($client);
+
+        $request->get('/ping');
+        $this->assertStringContainsString($extra_headers[0], curl_getinfo($client->ch, CURLINFO_HEADER_OUT));
     }
 
-    public function testAdditionalHeadersAfterInit()
+    /**
+     * @test
+     */
+    public function additionalHeadersAfterInit()
     {
-        $extra_headers = array('NewVar: foo');
+        $extra_headers = ['newvar: foo'];
         $this->client->setHeaders($extra_headers);
         $request = new Request($this->client);
-        $pingResponse = $request->get('/ping');
-        $this->assertContains($extra_headers[0], curl_getinfo($this->client->ch, CURLINFO_HEADER_OUT));
+
+        $request->get('/ping');
+        $this->assertStringContainsString($extra_headers[0], curl_getinfo($this->client->ch, CURLINFO_HEADER_OUT));
     }
 }
