@@ -3,9 +3,14 @@
 namespace QuickPay\API;
 
 use CurlHandle;
+use QuickPay\API\Exceptions\GenericException;
 
 class Client
 {
+    public static int $timeout = 15;
+    /** @var callable|null */
+    public static $onTimeout = null;
+
     public CurlHandle $ch;
     protected ?string $auth_string;
     protected array $headers = [];
@@ -13,7 +18,7 @@ class Client
     public function __construct(?string $auth_string = '', array $additional_headers = [])
     {
         if (!function_exists('curl_init')) {
-            throw new Exception('Lib cURL must be enabled on the server');
+            throw new GenericException('Lib cURL must be enabled on the server');
         }
 
         // Save authentication string

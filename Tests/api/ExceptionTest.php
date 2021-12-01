@@ -3,7 +3,7 @@
 namespace QuickPay\Tests;
 
 use PHPUnit\Framework\TestCase;
-use QuickPay\API\Exception;
+use QuickPay\API\Exceptions\GenericException;
 
 class ExceptionTest extends TestCase
 {
@@ -13,8 +13,8 @@ class ExceptionTest extends TestCase
     public function testThrownExceptionValues()
     {
         try {
-            throw new Exception($this->testMessage, $this->testCode);
-        } catch (Exception $e) {
+            throw new GenericException($this->testMessage, $this->testCode);
+        } catch (GenericException $e) {
             $this->assertEquals($e->getMessage(), $this->testMessage);
             $this->assertEquals($e->getCode(), $this->testCode);
         }

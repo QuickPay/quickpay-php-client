@@ -2,6 +2,9 @@
 
 namespace QuickPay\API;
 
+use QuickPay\API\Exceptions\GenericException;
+use QuickPay\API\Exceptions\TimeoutException;
+
 class Request
 {
     public Client $client;
@@ -69,8 +72,8 @@ class Request
             curl_setopt($this->client->ch, CURLOPT_POSTFIELDS, $this->httpBuildQuery($form));
         }
 
-        // Set Timeout (15 seconds)
-        curl_setopt($this->client->ch, CURLOPT_TIMEOUT, 15);
+        // Set Timeout
+        curl_setopt($this->client->ch, CURLOPT_TIMEOUT, Client::$timeout);
 
         /** @var resource $fh_header */
         $fh_header = fopen('php://temp', 'w+b');
@@ -80,10 +83,22 @@ class Request
         // Execute the request
         $response_data = (string) curl_exec($this->client->ch);
 
-        if (curl_errno($this->client->ch) !== 0) {
+        if (($errno = curl_errno($this->client->ch)) !== 0) {
             // An error occurred
             fclose($fh_header);
-            throw new Exception(curl_error($this->client->ch), curl_errno($this->client->ch));
+
+            // Handle timeout with a special either callable or exception
+            // allows for automatic failover on the application layer
+            // as QP is often slow at noticing that they have problems
+            if ($errno === CURLE_OPERATION_TIMEOUTED) {
+                $onTimeout = Client::$onTimeout ?? function () {
+                    throw new TimeoutException(curl_error($this->client->ch), curl_errno($this->client->ch));
+                };
+
+                $onTimeout();
+            }
+
+            throw new GenericException(curl_error($this->client->ch), curl_errno($this->client->ch));
         }
 
         // @phpstan-ignore-next-line
