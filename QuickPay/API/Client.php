@@ -7,10 +7,6 @@ use QuickPay\API\Exceptions\GenericException;
 
 class Client
 {
-    public static int $timeout = 15;
-    /** @var callable|null */
-    public static $onTimeout = null;
-
     public CurlHandle $ch;
     protected ?string $auth_string;
     protected array $headers = [];
