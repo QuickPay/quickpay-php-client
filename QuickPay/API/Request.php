@@ -4,6 +4,7 @@ namespace QuickPay\API;
 
 use QuickPay\API\Exceptions\GenericException;
 use QuickPay\API\Exceptions\TimeoutException;
+use QuickPay\QuickPay;
 
 class Request
 {
@@ -73,7 +74,7 @@ class Request
         }
 
         // Set Timeout
-        curl_setopt($this->client->ch, CURLOPT_TIMEOUT, Client::$timeout);
+        curl_setopt($this->client->ch, CURLOPT_TIMEOUT, QuickPay::$timeout);
 
         /** @var resource $fh_header */
         $fh_header = fopen('php://temp', 'w+b');
@@ -91,7 +92,7 @@ class Request
             // allows for automatic failover on the application layer
             // as QP is often slow at noticing that they have problems
             if ($errno === CURLE_OPERATION_TIMEOUTED) {
-                $onTimeout = Client::$onTimeout ?? function () {
+                $onTimeout = QuickPay::$onTimeout ?? function () {
                     throw new TimeoutException(curl_error($this->client->ch), curl_errno($this->client->ch));
                 };
 

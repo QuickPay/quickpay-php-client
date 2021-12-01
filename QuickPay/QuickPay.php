@@ -7,6 +7,10 @@ use QuickPay\API\Request;
 
 class QuickPay
 {
+    public static int $timeout = 15;
+    /** @var callable|null */
+    public static $onTimeout = null;
+
     public Request $request;
 
     public function __construct(string $auth_string = '', array $additional_headers = [])
