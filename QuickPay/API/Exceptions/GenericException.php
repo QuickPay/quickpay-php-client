@@ -1,8 +1,8 @@
 <?php
 
-namespace QuickPay\API;
+namespace QuickPay\API\Exceptions;
 
-class Exception extends \Exception
+class GenericException extends \Exception
 {
     public function __construct(string $message, int $code = 0, self $previous = null)
     {
