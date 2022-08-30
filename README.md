@@ -12,7 +12,7 @@ Simply add a dependency on quickpay/quickpay-php-client to your project's compos
 ```
 {
     "require": {
-        "imusicjj/quickpay-php-client": "1.0.*"
+        "quickpay/quickpay-php-client": "1.0.*"
     }
 }
 ```

@@ -34,7 +34,7 @@ class RequestTest extends TestCase
     {
         $pingResponse = $this->request->get('/ping');
 
-        $this->assertTrue(($pingResponse instanceof Response));
+        $this->assertTrue($pingResponse instanceof Response);
     }
 
     /**
