@@ -1,52 +1,22 @@
 <?php
+
 namespace QuickPay\API;
 
-use QuickPay\API\Constants;
-use QuickPay\API\Response;
+use QuickPay\API\Exceptions\GenericException;
+use QuickPay\API\Exceptions\TimeoutException;
+use QuickPay\QuickPay;
 
-/**
- * @class      QuickPay_Request
- * @since      0.1.0
- * @package    QuickPay
- * @category   Class
- * @author     Patrick Tolvstein, Perfect Solution ApS
- * @docs       http://tech.quickpay.net/api/
- */
 class Request
 {
-    /**
-     * Contains QuickPay_Client instance
-     *
-     * @access public
-     * @var Client
-     */
-    public $client;
+    public Client $client;
 
-    /**
-     * __construct function.
-     *
-     * Instantiates the object
-     *
-     * @access public
-     */
-    public function __construct($client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }
 
-    /**
-     * GET function.
-     *
-     * Performs an API GET request
-     *
-     * @access public
-     * @param  string $path
-     * @param  array  $query
-     * @return Response
-     */
-    public function get($path, $query = array())
+    public function get(string $path, array $query = []): Response
     {
-        // Add query parameters to $path?
         if (!empty($query)) {
             if (strpos($path, '?') === false) {
                 $path .= '?' . http_build_query($query, '', '&');
@@ -55,153 +25,100 @@ class Request
             }
         }
 
-        // Set the request params
         $this->setUrl($path);
 
-        // Start the request and return the response
         return $this->execute('GET');
     }
 
-    /**
-     * POST function.
-     *
-     * Performs an API POST request
-     *
-     * @access public
-     * @return Response
-     */
-    public function post($path, $form = array())
+    public function post(string $path, array $form = []): Response
     {
-        // Set the request params
         $this->setUrl($path);
 
-        // Start the request and return the response
         return $this->execute('POST', $form);
     }
 
-    /**
-     * PUT function.
-     *
-     * Performs an API PUT request
-     *
-     * @access public
-     * @return Response
-     */
-    public function put($path, $form = array())
+    public function put(string $path, array $form = []): Response
     {
-        // Set the request params
         $this->setUrl($path);
 
-        // Start the request and return the response
         return $this->execute('PUT', $form);
     }
 
-    /**
-     * PATCH function.
-     *
-     * Performs an API PATCH request
-     *
-     * @access public
-     * @return Response
-     */
-    public function patch($path, $form = array())
+    public function patch(string $path, array $form = []): Response
     {
-        // Set the request params
         $this->setUrl($path);
 
-        // Start the request and return the response
         return $this->execute('PATCH', $form);
     }
 
-    /**
-     * DELETE function.
-     *
-     * Performs an API DELETE request
-     *
-     * @access public
-     * @return Response
-     */
-    public function delete($path, $form = array())
+    public function delete(string $path, array $form = []): Response
     {
-        // Set the request params
         $this->setUrl($path);
 
-        // Start the request and return the response
         return $this->execute('DELETE', $form);
     }
 
-    /**
-     * setUrl function.
-     *
-     * Takes an API request string and appends it to the API url
-     *
-     * @access protected
-     * @return void
-     */
-    protected function setUrl($params)
+    protected function setUrl(string $url): void
     {
-        curl_setopt($this->client->ch, CURLOPT_URL, Constants::API_URL . trim($params, '/'));
+        curl_setopt($this->client->ch, CURLOPT_URL, Constants::API_URL . trim($url, '/'));
     }
 
-    /**
-     * EXECUTE function.
-     *
-     * Performs the prepared API request
-     *
-     * @access protected
-     * @param  string $request_type
-     * @param  array  $form
-     * @return Response
-     */
-    protected function execute($request_type, $form = array())
+    protected function execute(string $request_type, array $form = []): Response
     {
         // Set the HTTP request type
         curl_setopt($this->client->ch, CURLOPT_CUSTOMREQUEST, $request_type);
 
         // If additional data is delivered, we will send it along with the API request
-        if (is_array($form) && ! empty($form)) {
+        if (is_array($form) && !empty($form)) {
             curl_setopt($this->client->ch, CURLOPT_POSTFIELDS, $this->httpBuildQuery($form));
         }
 
-        // Store received headers in temporary memory file, remember sent headers
-        $fh_header = fopen('php://temp', 'w+');
+        // Set Timeout
+        curl_setopt($this->client->ch, CURLOPT_TIMEOUT, QuickPay::$timeout);
+
+        /** @var resource $fh_header */
+        $fh_header = fopen('php://temp', 'w+b');
         curl_setopt($this->client->ch, CURLOPT_WRITEHEADER, $fh_header);
         curl_setopt($this->client->ch, CURLINFO_HEADER_OUT, true);
 
         // Execute the request
-        $response_data = curl_exec($this->client->ch);
+        $response_data = (string) curl_exec($this->client->ch);
 
-        if (curl_errno($this->client->ch) !== 0) {
+        if (($errno = curl_errno($this->client->ch)) !== 0) {
             // An error occurred
             fclose($fh_header);
-            throw new Exception(curl_error($this->client->ch), curl_errno($this->client->ch));
+
+            // Handle timeout with a special either callable or exception
+            // allows for automatic failover on the application layer
+            // as QP is often slow at noticing that they have problems
+            if ($errno === CURLE_OPERATION_TIMEOUTED) {
+                $onTimeout = QuickPay::$onTimeout ?? function () {
+                    throw new TimeoutException(curl_error($this->client->ch), curl_errno($this->client->ch));
+                };
+
+                $onTimeout();
+            }
+
+            throw new GenericException(curl_error($this->client->ch), curl_errno($this->client->ch));
         }
 
-        // Grab the headers
-        $sent_headers = curl_getinfo($this->client->ch, CURLINFO_HEADER_OUT);
+        // @phpstan-ignore-next-line
+        $sent_headers = (string) curl_getinfo($this->client->ch, CURLINFO_HEADER_OUT);
         rewind($fh_header);
-        $received_headers = stream_get_contents($fh_header);
+        $received_headers = (string) stream_get_contents($fh_header);
         fclose($fh_header);
 
-        // Retrieve the HTTP response code
+        // @phpstan-ignore-next-line
         $response_code = (int) curl_getinfo($this->client->ch, CURLINFO_HTTP_CODE);
 
         // Return the response object.
         return new Response($response_code, $sent_headers, $received_headers, $response_data);
     }
 
-    /**
-     * Improves http_build_query() for the QuickPay use case.
-     *
-     * Kept public for testing purposes.
-     *
-     * @param array $query
-     * @return mixed|string
-     */
-    public function httpBuildQuery($query)
+    public function httpBuildQuery(array $query): array|string|null
     {
         $query = http_build_query($query, '', '&');
-        $query = preg_replace('/%5B[0-9]+%5D/i', '%5B%5D', $query);
-        return $query;
+
+        return preg_replace('/%5B[0-9]+%5D/i', '%5B%5D', $query);
     }
 }

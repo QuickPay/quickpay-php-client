@@ -2,9 +2,10 @@
 
 namespace QuickPay\Tests;
 
+use PHPUnit\Framework\TestCase;
 use QuickPay\API\Response;
 
-class ResponseTest extends \PHPUnit_Framework_TestCase
+class ResponseTest extends TestCase
 {
     private $responseTestData = '{ "key1": "value1", "key2": "value2" }';
 
@@ -15,25 +16,27 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      * @param string $expectedResult What we expect the result to be
      *
      * @dataProvider providerTestSuccessResponseHTTPCodes
+     *
+     * @test
      */
-    public function testSuccessResponseHTTPCodes($httpCode, $expectedResult)
+    public function successResponseHTTPCodes($httpCode, $expectedResult)
     {
         $response = new Response($httpCode, '', '', '');
 
         $result = $response->isSuccess();
 
-        $this->assertEquals($result, $expectedResult);
+        $this->assertSame($result, $expectedResult);
     }
 
     public function providerTestSuccessResponseHTTPCodes()
     {
-        return array(
-            array(200, true),
-            array(255, true),
-            array(299, true),
-            array(300, false),
-            array(400, false)
-        );
+        return [
+            [200, true],
+            [255, true],
+            [299, true],
+            [300, false],
+            [400, false],
+        ];
     }
 
     /**
@@ -43,26 +46,31 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      * @param string $expectedCode What we expect the result to be
      *
      * @dataProvider providerTestReturnOfHTTPStatusCodes
+     *
+     * @test
      */
-    public function testReturnOfHTTPStatusCodes($httpCode, $expectedCode)
+    public function returnOfHTTPStatusCodes($httpCode, $expectedCode)
     {
         $response = new Response($httpCode, '', '', '');
 
         $statusCode = $response->httpStatus();
 
-        $this->assertEquals($statusCode, $expectedCode);
+        $this->assertSame($statusCode, $expectedCode);
     }
 
     public function providerTestReturnOfHTTPStatusCodes()
     {
-        return array(
-            array(200, 200),
-            array(300, 300),
-            array(500, 500)
-        );
+        return [
+            [200, 200],
+            [300, 300],
+            [500, 500],
+        ];
     }
 
-    public function testReturnOfResponseDataAsArray()
+    /**
+     * @test
+     */
+    public function returnOfResponseDataAsArray()
     {
         $response = new Response(200, '', '', $this->responseTestData);
 
@@ -71,7 +79,10 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($responseArray));
     }
 
-    public function testReturnOfEmptyResponseDataAsArray()
+    /**
+     * @test
+     */
+    public function returnOfEmptyResponseDataAsArray()
     {
         $response = new Response(200, '', '', '');
 
@@ -80,7 +91,10 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($responseArray));
     }
 
-    public function testReturnOfResponseDataAsObject()
+    /**
+     * @test
+     */
+    public function returnOfResponseDataAsObject()
     {
         $response = new Response(200, '', '', $this->responseTestData);
 
@@ -89,7 +103,10 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_object($responseObject));
     }
 
-    public function testReturnOfEmptyResponseDataAsObject()
+    /**
+     * @test
+     */
+    public function returnOfEmptyResponseDataAsObject()
     {
         $response = new Response(200, '', '', '');
 
@@ -98,11 +115,14 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_object($responseObject));
     }
 
-    public function testReturnOfResponseDataAsRaw()
+    /**
+     * @test
+     */
+    public function returnOfResponseDataAsRaw()
     {
         $response = new Response(200, '', '', $this->responseTestData);
 
-        list($statusCode, $headers, $responseRaw) = $response->asRaw();
+        [$statusCode, $headers, $responseRaw] = $response->asRaw();
 
         $this->assertTrue(is_int($statusCode));
         $this->assertTrue(is_array($headers));
