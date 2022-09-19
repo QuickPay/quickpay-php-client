@@ -1,7 +1,7 @@
 quickpay-php-client
 ======================
 
-`quickpay-php-client` is a official client for [QuickPay API](http://tech.quickpay.net/api). The QuickPay API enables you to accept payments in a secure and reliable manner. This package currently support QuickPay `v10` api.
+`quickpay-php-client` is a official client for [QuickPay API](http://learn.quickpay.net/tech-talk/api/). The QuickPay API enables you to accept payments in a secure and reliable manner. This package currently support QuickPay `v10` api.
 
 ## Installation
 
@@ -12,7 +12,7 @@ Simply add a dependency on quickpay/quickpay-php-client to your project's compos
 ```
 {
     "require": {
-        "quickpay/quickpay-php-client": "1.0.*"
+        "quickpay/quickpay-php-client": "2.0.*"
     }
 }
 ```
@@ -31,7 +31,7 @@ First you should create a client instance that is anonymous or authorized with `
 
 To initialise an anonymous client:
 
-```php5
+```php8
 <?php
 use QuickPay\QuickPay;
 
@@ -45,7 +45,7 @@ try {
 
 To initialise a client with QuickPay Api Key:
 
-```php5
+```php8
 <?php
 use QuickPay\QuickPay;
 
@@ -60,7 +60,7 @@ try {
 
 Or you can provide login credentials like:
 
-```php5
+```php8
 <?php
 use QuickPay\QuickPay;
 
@@ -79,7 +79,7 @@ try {
 
 You can afterwards call any method described in QuickPay api with corresponding http method and endpoint. These methods are supported currently: `get`, `post`, `put`, `patch` and `delete`.
 
-```php5
+```php8
 // Get all payments
 $payments = $client->request->get('/payments');
 
@@ -103,7 +103,7 @@ if ($status == 201) {
 ### Handling the response
 Getting the `HTTP status code`:
 
-```php5
+```php8
 $response = $client->request->get('/payments');
 $status = $response->httpStatus();
 
@@ -114,7 +114,7 @@ if ($status == 200) {
 
 The returned response object supports 3 different ways of returning the response body, `asRaw()`, `asObject`, `asArray()`.
 
-```php5
+```php8
 // Get the HTTP status code, headers and raw response body.
 list($status_code, $headers, $response_body) = $client->request->get('/payments')->asRaw();
 
@@ -133,7 +133,19 @@ foreach($payments as $payment) {
 
 ```
 
-You can read more about api responses at [http://tech.quickpay.net/api/](http://tech.quickpay.net/api).
+### Setting timeouts
+Set timeout and get notified on timeouts:
+
+```php8
+QuickPayAPI::$timeout = 30;
+QuickPayAPI::$onTimeout ??= function () {
+    event(new PaymentGatewayTimeout($this));
+
+    throw new TimeoutException("No response from Quickpay within " . QuickPayAPI::$timeout . " seconds");
+};
+```
+
+You can read more about api responses at [http://learn.quickpay.net/tech-talk/api/](http://learn.quickpay.net/tech-talk/api/).
 
 ## Tests
 
