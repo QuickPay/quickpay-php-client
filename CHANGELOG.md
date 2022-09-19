@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.0 - 2022-09-19
+### Changed
+- **Breaking:** Updated SDK to work with PHP8. Version 2 requires PHP8 as a minimum now.
+
 ## 1.1.0 - 2019-12-16
 
 - Support for additional headers in requests - fixes [issue 56](https://github.com/QuickPay/quickpay-php-client/issues/56).
