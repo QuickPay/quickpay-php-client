@@ -7,6 +7,9 @@ use QuickPay\API\Response;
 
 class ResponseTest extends TestCase
 {
+    private $responseTestHeaders = "Server: nginx
+    Date: Fri, 09 Apr 2021 09:13:04 GMT
+    Content-Type: application/json";
     private $responseTestData = '{ "key1": "value1", "key2": "value2" }';
 
     /**
@@ -127,5 +130,23 @@ class ResponseTest extends TestCase
         $this->assertTrue(is_int($statusCode));
         $this->assertTrue(is_array($headers));
         $this->assertTrue(is_string($responseRaw));
+    }
+    
+    public function testReturnOfResponseHeadersArrayKeyValuePairArray()
+    {
+        $response = new Response(200, '', $this->responseTestHeaders, $this->responseTestData);
+        $headers = $response->getHeaders();
+        
+        $isAssociativeArray = (bool)count(array_filter(array_keys($headers), 'is_string')) > 0;
+
+        $this->assertTrue($isAssociativeArray);
+    }
+
+    public function testReturnOfResponseHeaderServer()
+    {
+        $response = new Response(200, '', $this->responseTestHeaders, $this->responseTestData);
+        $header = $response->getHeader('Server');
+
+        $this->assertTrue(is_string($header));
     }
 }

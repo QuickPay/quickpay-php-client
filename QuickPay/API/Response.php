@@ -65,4 +65,56 @@ class Response
     {
         return $this->status_code < 300;
     }
+
+    /**
+     * getHeaders
+     *
+     * Returns headers from response
+     *
+     * @return array
+     */
+    public function getHeaders()
+    {
+        $result = [];
+
+        if ($headers = $this->received_headers) {
+            // Filter out HTTP status and empty header lines
+            $headers = array_filter(explode("\r\n", $headers), function ($header) {
+                return empty($header) == false && strpos($header, ':');
+            });
+
+            // Build two dimensional key value pair array of headers
+            foreach ($headers as $index => $header) {
+                $headerArray = explode(':', $header);
+                $key = trim($headerArray[0]);
+                $value = trim($headerArray[1]);
+
+                $headers[$key] = $value;
+                unset($headers[$index]);
+            }
+
+            $result = $headers;
+        }
+
+        return $result;
+    }
+
+    /**
+     * getHeader
+     *
+     * Gets header from received headers
+     *
+     * @param string|false $key
+     */
+    public function getHeader($key)
+    {
+        $result = false;
+        $headers = $this->getHeaders();
+
+        if (isset($headers[$key])) {
+            $result = $headers[$key];
+        }
+
+        return $result;
+    }
 }
