@@ -60,7 +60,7 @@ class Request
 
     protected function setUrl(string $url): void
     {
-        curl_setopt($this->client->ch, CURLOPT_URL, Constants::API_URL . trim($url, '/'));
+        curl_setopt($this->client->ch, CURLOPT_URL, $this->client->getApiURL() . trim($url, '/'));
     }
 
     protected function execute(string $request_type, array $form = []): Response

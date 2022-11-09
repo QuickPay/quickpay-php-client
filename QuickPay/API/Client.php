@@ -10,12 +10,20 @@ class Client
     public CurlHandle $ch;
     protected ?string $auth_string;
     protected array $headers = [];
+    protected string $api_url = "";
 
-    public function __construct(?string $auth_string = '', array $additional_headers = [])
+    public function __construct(?string $auth_string = '', array $additional_headers = [], $api_url = Constants::API_URL)
     {
         if (!function_exists('curl_init')) {
             throw new GenericException('Lib cURL must be enabled on the server');
         }
+
+        $this->api_url = $api_url;
+        if($api_url == Constants::INVOICING_API_URL){
+            // no idea why, but invoicing requires this header.
+            $additional_headers = array_merge($additional_headers,['Accept: application/vnd.api+json']);
+        }
+
 
         // Save authentication string
         $this->auth_string = $auth_string;
@@ -38,6 +46,10 @@ class Client
 
         // Add custom headers and set headers in cURL object.
         $this->setHeaders($additional_headers);
+    }
+
+    function getApiURL(){
+        return $this->api_url;
     }
 
     public function shutdown(): void

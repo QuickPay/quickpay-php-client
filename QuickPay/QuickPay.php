@@ -13,9 +13,9 @@ class QuickPay
 
     public Request $request;
 
-    public function __construct(string $auth_string = '', array $additional_headers = [])
+    public function __construct(string $auth_string = '', array $additional_headers = [], $api_url = Constants::API_URL)
     {
-        $client        = new Client($auth_string, $additional_headers);
+        $client        = new Client($auth_string, $additional_headers, $api_url);
         $this->request = new Request($client);
     }
 
