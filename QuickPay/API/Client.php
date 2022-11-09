@@ -10,7 +10,7 @@ class Client
     public CurlHandle $ch;
     protected ?string $auth_string;
     protected array $headers = [];
-    protected string $api_url = [];
+    protected string $api_url = "";
 
     public function __construct(?string $auth_string = '', array $additional_headers = [], $api_url = Constants::API_URL)
     {
